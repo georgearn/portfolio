@@ -84,13 +84,15 @@ a:hover{color:var(--color-neutral-200)}
   <h1 style="font:500 42px/1.15 var(--font-heading);margin:0 0 var(--space-3);color:var(--color-text);max-width:20ch">FitApp</h1>
   <p style="font:400 16px/1.6 var(--font-body);color:var(--color-neutral-200);margin:0 0 var(--space-4)">A tool for finding the next exercise, not logging the last one — browse a full library by muscle group, generate a routine by rule or by AI, or build one by hand.</p>
   <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
-    <span class="tag">Flet</span><span class="tag">Python</span><span class="tag">WorkoutX API</span><span class="tag">Gemini 2.5 Flash</span><span class="tag">Gemini Nano</span>
+    <span class="tag">Flet</span><span class="tag">Python</span><span class="tag">WorkoutX API</span><span class="tag">Gemini 2.5 Flash</span><span class="tag">Gemini Nano</span><span class="tag">Material You</span>
   </div>
 </div>
 
 <div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
   <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">The idea is simple: after running the same routine for a while, I want fresh alternatives, not another app to log the same reps in. Freeletics got closest to what I wanted, but only its workout builder — bodyweight moves, band variations, that kind of variety. The tracking half never interested me, since a watch already does that job, so there's deliberately no start-workout or logging screen here.</p>
-  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0">It's also where the engine changed: Kivy gave way to Flet, which comes with far more modern UI building blocks out of the box. The first version was plain — a small, hand-picked exercise list grouped by muscle group. The real work started once I went looking for an exercise database worth building on, and separately, for a body model that could actually be pulled apart into regions a person could tap.</p>
+  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">It's also where the engine changed: Kivy gave way to Flet. The first version was plain — a small, hand-picked exercise list grouped by muscle group. The real work started once I went looking for an exercise database worth building on, and separately, for a body model that could actually be pulled apart into regions a person could tap.</p>
+  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">Kivy draws every control from scratch, so a button, a list row, or a picker is a widget you style and maintain yourself — there's no design system underneath, just whatever you build. Flet renders through Flutter instead, so real Material 3 widgets — segmented buttons, bottom sheets, ColorScheme-aware theming — come built in and look native rather than hand-drawn. That's also what let the app follow the phone's light/dark setting and, on Android 12+, pull its accent color straight from the wallpaper (Material You) without me reimplementing any of that by hand. And it stays Python end to end: no bridging into a second UI language, one <code>flet build apk</code> away from a shippable Android build, with a <code>flet run --web</code> version usable straight in a browser tab for quick iteration.</p>
+  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0">None of that is free, though. Flet's Android build bundles the Flutter engine, so the APK is meaningfully larger than a comparable Kivy one. Its plugin ecosystem is younger and thinner, so anything Flutter can do that Flet hasn't wrapped yet — Material You's wallpaper-color extraction, here — means writing a small Flutter/Dart extension by hand instead of finding one already made. And being newer, its documentation and community answers are sparser than Kivy's decade-plus head start. For a small solo app where a modern, native-feeling UI was the whole point, that trade was worth making; for something that needs deep custom rendering or already has a large Kivy codebase behind it, it might not be.</p>
 </div>
 
 <div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
@@ -109,7 +111,12 @@ a:hover{color:var(--color-neutral-200)}
     <div class="feature">
       <div class="num">03</div>
       <h3 class="ft">On-device AI, where it's supported</h3>
-      <p class="fd">Wiring AI into the app meant exploring on-phone inference — Gemini Nano runs the coach fully offline, alongside a cloud Gemini fallback for phones the on-device model doesn't support.</p>
+      <p class="fd">Wiring AI in meant exploring on-phone inference — Gemini Nano, via Android's AICore, runs the coach fully offline and privately, but only on the handful of Pixel phones AICore actually ships on, and only once the on-device model itself has downloaded (a multi-gigabyte one-time fetch). Everywhere else, a cloud Gemini 2.5 Flash fallback takes over, using the person's own API key rather than one baked into the app.</p>
+    </div>
+    <div class="feature">
+      <div class="num">04</div>
+      <h3 class="ft">Keeping AI grounded to the real library</h3>
+      <p class="fd">The AI coach doesn't invent exercises — its prompt constrains it to the same WorkoutX-sourced library the Rule Builder draws from, so a generated routine can't reference a move without a real animation, form cues, and equipment tag behind it. The trade-off is capability: Gemini Nano's smaller on-device model needs a stricter, more repetitive prompt to stay inside that constraint reliably than the cloud model does, and it still occasionally needs a regenerate to come back with a clean, parseable result.</p>
     </div>
   </div>
 </div>
@@ -119,10 +126,12 @@ a:hover{color:var(--color-neutral-200)}
   <div class="screens">
     <figure><img class="lighten" src="img/fitapp-body-map.png" alt="Interactive body map"><figcaption>Body — tap a muscle to explore</figcaption></figure>
     <figure><img class="lighten" src="img/fitapp-chest-exercises.png" alt="Chest exercises list"><figcaption>Exercise list by muscle group</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-exercise-detail.png" alt="Exercise detail modal"><figcaption>Exercise detail — form, targets, sets</figcaption></figure>
+    <figure><img class="lighten" src="img/fitapp-exercise-detail.png" alt="Exercise detail sheet"><figcaption>Exercise detail — form, targets, variations</figcaption></figure>
+    <figure><img class="lighten" src="img/fitapp-exercise-variations.png" alt="Equipment variation with a back button"><figcaption>Browsing a variation, with a way back</figcaption></figure>
     <figure><img class="lighten" src="img/fitapp-workouts-empty.png" alt="My Workouts empty state"><figcaption>Saved routines</figcaption></figure>
     <figure><img class="lighten" src="img/fitapp-generator-rulebuilder.png" alt="Workout Generator, Rule Builder mode"><figcaption>Generator — Rule Builder</figcaption></figure>
     <figure><img class="lighten" src="img/fitapp-generator-aicoach.png" alt="Workout Generator, AI Coach mode"><figcaption>Generator — AI Coach, dual engine</figcaption></figure>
+    <figure><img class="lighten" src="img/fitapp-settings-accent.png" alt="Settings, Material You and accent palette"><figcaption>Settings — Material You or a custom accent</figcaption></figure>
     <figure><img class="lighten" src="img/fitapp-manual-builder.png" alt="Manual workout builder"><figcaption>Manual Builder</figcaption></figure>
   </div>
 </div>
