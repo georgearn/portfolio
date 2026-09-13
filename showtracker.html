@@ -13,20 +13,64 @@
   --color-neutral-400:#b2b6ca; --color-neutral-500:#9397ab; --color-neutral-600:#75798c;
   --color-neutral-700:#595d6c; --color-neutral-800:#3f424d; --color-neutral-900:#292b31;
   --font-heading:"Inter",system-ui,sans-serif; --font-heading-weight:500; --font-body:"Inter",system-ui,sans-serif;
-  --space-2:5.6px; --space-3:8.4px; --space-4:11.2px; --space-6:16.8px; --space-8:22.4px;
-  --radius-lg:14px;
+  --space-1:2.8px; --space-2:5.6px; --space-3:8.4px; --space-4:11.2px; --space-6:16.8px; --space-8:22.4px;
+  --radius-md:8px; --radius-lg:14px;
 }
 *{box-sizing:border-box;}
 body{margin:0;background:var(--color-neutral-900);color:var(--color-text);font-family:var(--font-body);font-size:15px;line-height:1.55;}
-h1{font-family:var(--font-heading);font-weight:var(--font-heading-weight);margin:0;}
+h1,h2,h3,h4{font-family:var(--font-heading);font-weight:var(--font-heading-weight);margin:0;}
 a{color:var(--color-neutral-300);text-decoration:none}
 a:hover{color:var(--color-neutral-200)}
 :focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;}
-.wrap{max-width:760px;margin:0 auto;padding:0 var(--space-6)}
+::selection{background:color-mix(in srgb, var(--color-accent) 30%, transparent);}
+.lighten{mix-blend-mode:lighten;background-color:transparent}
+.wrap{max-width:1040px;margin:0 auto;padding:0 var(--space-6)}
+.feature{padding:var(--space-6);border-radius:var(--radius-lg);background:var(--color-neutral-800);border:1px solid var(--color-neutral-700)}
+.feature .num{font:500 12px/1 ui-monospace,monospace;color:var(--color-neutral-300);margin-bottom:var(--space-3)}
+.feature .ft{font:500 16px/1.3 var(--font-heading);margin:0 0 var(--space-2)}
+.feature .fd{font:400 13.5px/1.55 var(--font-body);color:var(--color-neutral-200);margin:0}
+.fgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
+@media (max-width:760px){.fgrid{grid-template-columns:1fr}}
+.tag{font:500 11px/1 var(--font-body);padding:5px 10px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-200)}
 .badge{display:inline-flex;align-items:center;gap:6px;font:500 10.5px/1 var(--font-body);letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-300)}
 .navrow a.back{display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--font-body);color:var(--color-neutral-300)}
 .navrow a.back:hover{color:var(--color-neutral-200)}
-.pt{padding:var(--space-6);border-radius:var(--radius-lg);background:var(--color-neutral-800);border:1px solid var(--color-neutral-700)}
+.screens{
+  display:flex;
+  gap:var(--space-4);
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding-bottom:var(--space-3);
+  scrollbar-width:thin;
+  scrollbar-color:var(--color-neutral-700) transparent;
+}
+.screens::-webkit-scrollbar{height:6px}
+.screens::-webkit-scrollbar-track{background:transparent}
+.screens::-webkit-scrollbar-thumb{background:var(--color-neutral-700);border-radius:99px}
+.screens figure{margin:0;flex:0 0 auto;width:230px;scroll-snap-align:start}
+.screens img{width:100%;display:block;border-radius:var(--radius-md);background:var(--color-neutral-900)}
+.screens figcaption{font-size:11px;margin-top:var(--space-2);color:color-mix(in srgb, var(--color-text) 55%, transparent)}
+.screens img{cursor:zoom-in;transition:opacity .15s}
+.screens img:hover{opacity:.85}
+
+.lightbox{position:fixed;inset:0;background:rgba(10,11,16,.93);display:none;align-items:center;justify-content:center;flex-direction:column;padding:var(--space-8);z-index:1000}
+.lightbox.open{display:flex}
+.lightbox-img{max-width:88vw;max-height:78vh;object-fit:contain;border-radius:var(--radius-md)}
+.lightbox-caption{color:var(--color-neutral-300);font-size:13px;margin-top:var(--space-4)}
+.lightbox-close,.lightbox-prev,.lightbox-next{
+  position:absolute;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;border:1px solid var(--color-neutral-600);background:transparent;
+  color:var(--color-text);cursor:pointer;transition:border-color .15s,color .15s;
+}
+.lightbox-close:hover,.lightbox-prev:hover,.lightbox-next:hover{border-color:var(--color-accent);color:var(--color-accent)}
+.lightbox-close{top:var(--space-6);right:var(--space-6);width:40px;height:40px;font-size:22px;line-height:1}
+.lightbox-prev,.lightbox-next{top:50%;transform:translateY(-50%);width:46px;height:46px;font-size:18px}
+.lightbox-prev{left:var(--space-6)}
+.lightbox-next{right:var(--space-6)}
+@media (max-width:600px){
+  .lightbox-prev{left:var(--space-2)}
+  .lightbox-next{right:var(--space-2)}
+}
 </style>
 </head>
 <body>
@@ -35,14 +79,74 @@ a:hover{color:var(--color-neutral-200)}
   <a class="back" href="./index.html">&larr; All apps</a>
 </div>
 
-<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3);min-height:50vh;display:flex;flex-direction:column;justify-content:center">
-  <div style="margin-bottom:var(--space-4)"><span class="badge">Concept</span></div>
+<div class="wrap" style="padding-bottom:var(--space-6)">
+  <div style="margin-bottom:var(--space-4)"><span class="badge">Building</span></div>
   <div style="font:500 12px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-300);margin-bottom:var(--space-3)">Entertainment</div>
-  <h1 style="font:500 42px/1.15 var(--font-heading);margin:0 0 var(--space-4);color:var(--color-text)">Show Tracker</h1>
-  <p style="font:400 16px/1.6 var(--font-body);color:var(--color-neutral-200);margin:0 0 var(--space-6)">One list for everything I'm watching — movies and series together, with my place saved and what's next queued up, instead of a note-app list I forget to check.</p>
-  <div class="pt">
-    <div style="font:500 13px/1.3 var(--font-heading);color:var(--color-text);margin-bottom:var(--space-2)">Not started</div>
-    <p style="font:400 13.5px/1.55 var(--font-body);color:var(--color-neutral-200);margin:0">Stack isn't decided yet — this is the fourth app in the queue, right after FitApp. Details land here once it's underway.</p>
+  <h1 style="font:500 42px/1.15 var(--font-heading);margin:0 0 var(--space-3);color:var(--color-text);max-width:20ch">Show Tracker</h1>
+  <p style="font:400 16px/1.6 var(--font-body);color:var(--color-neutral-200);margin:0 0 var(--space-4)">One list for everything I'm watching — movies and series together, what's releasing soon, what just dropped, and a quick picker for when I can't decide.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+    <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Material 3</span><span class="tag">Room</span><span class="tag">Hilt</span><span class="tag">Retrofit + Moshi</span><span class="tag">WorkManager</span><span class="tag">TMDB</span><span class="tag">OMDb</span>
+  </div>
+</div>
+
+<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
+  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">The idea is simple: I wanted one overview of what's coming and what just landed, a way to set a reminder for a specific title instead of hoping I'd remember it, and a search that lets me add anything — movie or series — to a single watchlist. From there, a quick picker takes the decision-fatigue part off my hands: give it a mood, a runtime window, a genre or two, and it either draws from what's already on the list or hands back something fully random.</p>
+  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">This is also a different starting point from the other two apps here. FitApp and Subscription Tracker both began in Python — Kivy first, one later rebuilt in Kotlin once the concept had proven itself. Show Tracker skipped that step and went straight to native Kotlin and Jetpack Compose, since by this point the Kotlin/Compose toolchain from the Subscription Tracker rebase was already familiar. There's no local Android Studio setup behind it, though — the project builds through a GitHub Actions workflow, which assembles the APK on push and hands back a downloadable artifact, the same reproducible-build instinct that had Subscription Tracker's Kivy version building inside Docker.</p>
+  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0">Metadata comes from two APIs stitched together: TMDB for search, trending titles, synopses, cast, posters, and region-aware "where to watch" data, and OMDb — queried by IMDb ID — for the IMDb rating and Rotten Tomatoes score TMDB doesn't carry itself. Neither IMDb nor Rotten Tomatoes exposes a public API of their own, so this pairing is the practical ceiling on what a hobby project can pull in without scraping — see below for where that shows.</p>
+</div>
+
+<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
+  <h2 style="font:500 22px/1.3 var(--font-heading);margin:0 0 var(--space-6)">What it does</h2>
+  <div class="fgrid" style="margin-bottom:var(--space-6)">
+    <div class="feature">
+      <div class="num">01</div>
+      <h3 class="ft">Releasing Soon &amp; Just Dropped</h3>
+      <p class="fd">Home surfaces two rails: upcoming titles with a bell to arm a notification, and what's newly out with a one-tap add to the watchlist — both filtered by preferred genres and country when those are set.</p>
+    </div>
+    <div class="feature">
+      <div class="num">02</div>
+      <h3 class="ft">Search and a single watchlist</h3>
+      <p class="fd">Discover searches movies and series together against TMDB. Anything found gets handpicked onto one list, which then doubles as a simple watch log — checked off once seen, deleted once done.</p>
+    </div>
+    <div class="feature">
+      <div class="num">03</div>
+      <h3 class="ft">A quick picker for indecision</h3>
+      <p class="fd">For You runs a short quiz — mood, movie or series, runtime, specific genres — then either pulls a match from the watchlist or, with Surprise Me, ignores all of it for a fully random pick.</p>
+    </div>
+    <div class="feature">
+      <div class="num">04</div>
+      <h3 class="ft">Release-day notifications</h3>
+      <p class="fd">No local alarms — a WorkManager job re-checks TMDB for every watchlisted title still marked upcoming roughly twice a day, and fires a notification the moment its status flips to released.</p>
+    </div>
+    <div class="feature">
+      <div class="num">05</div>
+      <h3 class="ft">Genre, region and content filters</h3>
+      <p class="fd">Settings holds preferred genres (used to filter Home and Just Dropped), a region code for which streaming services show under "where to watch," and per-country content filters to hide titles from countries you'd rather not see, with exceptions.</p>
+    </div>
+    <div class="feature">
+      <div class="num">06</div>
+      <h3 class="ft">Where TMDB + OMDb fall short</h3>
+      <p class="fd">Both APIs are rate-limited and occasionally miss a title entirely, especially smaller or very recent releases. OMDb's IMDb/Rotten Tomatoes lookup depends on TMDB having a matching IMDb ID in the first place, so a handful of titles show ratings as unavailable rather than wrong.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
+  <h2 style="font:500 22px/1.3 var(--font-heading);margin:0 0 var(--space-4)">Not wired in yet</h2>
+  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0">Notifications currently track a title as a whole, not a season — so a series already marked released doesn't get a second alert when a new season lands. Doing that properly means tracking season-level release dates per watchlisted series rather than one release flag per title, which is the next piece to design in rather than bolt on.</p>
+</div>
+
+<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
+  <h2 style="font:500 22px/1.3 var(--font-heading);margin:0 0 var(--space-6)">Screens</h2>
+  <div class="screens">
+    <figure><img class="lighten" src="img/showtracker-home.png" alt="Home screen with Releasing Soon and Just Dropped rails"><figcaption>Home — releasing soon, just dropped</figcaption></figure>
+    <figure><img class="lighten" src="img/showtracker-notifications.png" alt="Notifications screen listing armed release reminders"><figcaption>Armed release notifications</figcaption></figure>
+    <figure><img class="lighten" src="img/showtracker-discover.png" alt="Discover search screen"><figcaption>Discover — search movies &amp; series</figcaption></figure>
+    <figure><img class="lighten" src="img/showtracker-watchlist.png" alt="My Watchlist screen"><figcaption>My Watchlist</figcaption></figure>
+    <figure><img class="lighten" src="img/showtracker-foryou-quiz.png" alt="For You quiz with mood, length and genre filters"><figcaption>For You — mood, length, genre</figcaption></figure>
+    <figure><img class="lighten" src="img/showtracker-foryou-picks.png" alt="For You screen with Get My Picks and Surprise Me buttons"><figcaption>For You — get picks or go random</figcaption></figure>
+    <figure><img class="lighten" src="img/showtracker-settings-genres.png" alt="Settings screen with region and preferred genres"><figcaption>Settings — region &amp; preferred genres</figcaption></figure>
+    <figure><img class="lighten" src="img/showtracker-settings-filters.png" alt="Settings screen with release lookahead and content filters"><figcaption>Settings — lookahead &amp; content filters</figcaption></figure>
   </div>
 </div>
 
@@ -51,5 +155,6 @@ a:hover{color:var(--color-neutral-200)}
   <a class="back" href="./french.html">French Grammar &rarr;</a>
 </div>
 
+<script src="gallery.js" defer></script>
 </body>
 </html>
