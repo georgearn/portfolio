@@ -32,6 +32,12 @@ a:hover{color:var(--color-neutral-200)}
 @media (max-width:760px){.fgrid{grid-template-columns:1fr}}
 .tag{font:500 11px/1 var(--font-body);padding:5px 10px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-200)}
 .badge{display:inline-flex;align-items:center;gap:6px;font:500 10.5px/1 var(--font-body);letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-300)}
+.hero{display:flex;gap:var(--space-6);align-items:center;margin-bottom:var(--space-6)}
+.hero-icon{flex:none}
+.hero-icon img{width:84px;height:84px;border-radius:var(--radius-lg);display:block}
+.hero-meta{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
+.hero-eyebrow{font:500 12px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-300)}
+@media (max-width:560px){.hero{flex-direction:column;align-items:flex-start;gap:var(--space-4)}}
 .navrow a.back{display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--font-body);color:var(--color-neutral-300)}
 .navrow a.back:hover{color:var(--color-neutral-200)}
 .screens{
@@ -79,9 +85,13 @@ a:hover{color:var(--color-neutral-200)}
 </div>
 
 <div class="wrap" style="padding-bottom:var(--space-6)">
-  <div style="margin-bottom:var(--space-4)"><span class="badge">Live</span></div>
-  <div style="font:500 12px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-300);margin-bottom:var(--space-3)">Health &amp; fitness</div>
-  <h1 style="font:500 42px/1.15 var(--font-heading);margin:0 0 var(--space-3);color:var(--color-text);max-width:20ch">FitApp</h1>
+  <div class="hero">
+    <div class="hero-icon"><img src="img/fitapp-icon.png" alt="FitApp icon"></div>
+    <div>
+      <div class="hero-meta"><span class="hero-eyebrow">Health &amp; fitness</span></div>
+      <h1 style="font:500 42px/1.15 var(--font-heading);margin:0;color:var(--color-text);max-width:20ch">FitApp</h1>
+    </div>
+  </div>
   <p style="font:400 16px/1.6 var(--font-body);color:var(--color-neutral-200);margin:0 0 var(--space-4)">A tool for finding the next exercise, not logging the last one — browse a full library by muscle group, generate a routine by rule or by AI, or build one by hand.</p>
   <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
     <span class="tag">Flet</span><span class="tag">Python</span><span class="tag">WorkoutX API</span><span class="tag">Gemini 2.5 Flash</span><span class="tag">Gemini Nano</span><span class="tag">Material You</span>
@@ -125,14 +135,14 @@ a:hover{color:var(--color-neutral-200)}
   <h2 style="font:500 22px/1.3 var(--font-heading);margin:0 0 var(--space-6)">Screens</h2>
   <div class="screens">
     <figure><img class="lighten" src="img/fitapp-body-map.png" alt="Interactive body map"><figcaption>Body — tap a muscle to explore</figcaption></figure>
+    <figure><img class="lighten" src="img/fitapp-body-map-selected.png" alt="Body map with chest selected, showing exercise count"><figcaption>Body — muscle selected, jump straight to exercises</figcaption></figure>
     <figure><img class="lighten" src="img/fitapp-chest-exercises.png" alt="Chest exercises list"><figcaption>Exercise list by muscle group</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-exercise-detail.png" alt="Exercise detail sheet"><figcaption>Exercise detail — form, targets, variations</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-exercise-variations.png" alt="Equipment variation with a back button"><figcaption>Browsing a variation, with a way back</figcaption></figure>
+    <figure><img class="lighten" src="img/fitapp-exercise-detail.gif" alt="Exercise detail sheet opening and browsing variations"><figcaption>Exercise detail — form, targets, variations</figcaption></figure>
     <figure><img class="lighten" src="img/fitapp-workouts-empty.png" alt="My Workouts empty state"><figcaption>Saved routines</figcaption></figure>
     <figure><img class="lighten" src="img/fitapp-generator-rulebuilder.png" alt="Workout Generator, Rule Builder mode"><figcaption>Generator — Rule Builder</figcaption></figure>
     <figure><img class="lighten" src="img/fitapp-generator-aicoach.png" alt="Workout Generator, AI Coach mode"><figcaption>Generator — AI Coach, dual engine</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-settings-accent.png" alt="Settings, Material You and accent palette"><figcaption>Settings — Material You or a custom accent</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-manual-builder.png" alt="Manual workout builder"><figcaption>Manual Builder</figcaption></figure>
+    <figure><img class="lighten" src="img/fitapp-settings-apikey.png" alt="Settings, Gemini API key for AI Coach"><figcaption>Settings — Gemini API key for AI Coach</figcaption></figure>
+    <figure><img class="lighten" src="img/fitapp-manual-builder.gif" alt="Manual workout builder flow"><figcaption>Manual Builder — muscles, equipment, add exercises</figcaption></figure>
   </div>
 </div>
 

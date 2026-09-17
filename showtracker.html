@@ -33,6 +33,12 @@ a:hover{color:var(--color-neutral-200)}
 @media (max-width:760px){.fgrid{grid-template-columns:1fr}}
 .tag{font:500 11px/1 var(--font-body);padding:5px 10px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-200)}
 .badge{display:inline-flex;align-items:center;gap:6px;font:500 10.5px/1 var(--font-body);letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-300)}
+.hero{display:flex;gap:var(--space-6);align-items:center;margin-bottom:var(--space-6)}
+.hero-icon{flex:none}
+.hero-icon img{width:84px;height:84px;border-radius:var(--radius-lg);display:block}
+.hero-meta{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
+.hero-eyebrow{font:500 12px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-300)}
+@media (max-width:560px){.hero{flex-direction:column;align-items:flex-start;gap:var(--space-4)}}
 .navrow a.back{display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--font-body);color:var(--color-neutral-300)}
 .navrow a.back:hover{color:var(--color-neutral-200)}
 .screens{
@@ -80,9 +86,13 @@ a:hover{color:var(--color-neutral-200)}
 </div>
 
 <div class="wrap" style="padding-bottom:var(--space-6)">
-  <div style="margin-bottom:var(--space-4)"><span class="badge">Live</span></div>
-  <div style="font:500 12px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-300);margin-bottom:var(--space-3)">Entertainment</div>
-  <h1 style="font:500 42px/1.15 var(--font-heading);margin:0 0 var(--space-3);color:var(--color-text);max-width:20ch">Show Tracker</h1>
+  <div class="hero">
+    <div class="hero-icon"><img src="img/showtracker-icon.png" alt="Show Tracker icon"></div>
+    <div>
+      <div class="hero-meta"><span class="hero-eyebrow">Entertainment</span></div>
+      <h1 style="font:500 42px/1.15 var(--font-heading);margin:0;color:var(--color-text);max-width:20ch">Show Tracker</h1>
+    </div>
+  </div>
   <p style="font:400 16px/1.6 var(--font-body);color:var(--color-neutral-200);margin:0 0 var(--space-4)">One list for everything I'm watching — movies and series together, what's releasing soon, what just dropped, and a quick picker for when I can't decide.</p>
   <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
     <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Material 3</span><span class="tag">Room</span><span class="tag">Hilt</span><span class="tag">Retrofit + Moshi</span><span class="tag">WorkManager</span><span class="tag">TMDB</span><span class="tag">OMDb</span>
@@ -91,7 +101,8 @@ a:hover{color:var(--color-neutral-200)}
 
 <div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
   <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">The idea is simple: I wanted one overview of what's coming and what just landed, a way to set a reminder for a specific title instead of hoping I'd remember it, and a search that lets me add anything — movie or series — to a single watchlist. From there, a quick picker takes the decision-fatigue part off my hands: give it a mood, a runtime window, a genre or two, and it either draws from what's already on the list or hands back something fully random.</p>
-  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">This is also a different starting point from the other two apps here. FitApp and Subscription Tracker both began in Python — Kivy first, one later rebuilt in Kotlin once the concept had proven itself. Show Tracker skipped that step and went straight to native Kotlin and Jetpack Compose, since by this point the Kotlin/Compose toolchain from the Subscription Tracker rebase was already familiar. There's no local Android Studio setup behind it, though — the project builds through a GitHub Actions workflow, which assembles the APK on push and hands back a downloadable artifact, the same reproducible-build instinct that had Subscription Tracker's Kivy version building inside Docker.</p>
+  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">This is also a different starting point from the other two apps here. FitApp and Subscription Tracker both began in Python — Kivy first, one later rebuilt in Kotlin once the concept had proven itself. Show Tracker skipped that step and went straight to native Kotlin and Jetpack Compose, since by this point the Kotlin/Compose toolchain from the Subscription Tracker rebase was already familiar. The whole build lives entirely online — no Android Studio, no local Gradle, no offline machine involved at any point. Every commit goes straight to GitHub, and GitHub Actions does the rest, the same reproducible-build instinct that had Subscription Tracker's Kivy version building inside Docker.</p>
+  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">The workflow itself is a small YAML file under <code style="font:12.5px ui-monospace,monospace;color:var(--color-neutral-200);background:var(--color-neutral-900);padding:1px 6px;border-radius:4px">.github/workflows/</code>, triggered on every push to main. It checks out the repo, sets up a JDK via <code style="font:12.5px ui-monospace,monospace;color:var(--color-neutral-200);background:var(--color-neutral-900);padding:1px 6px;border-radius:4px">actions/setup-java</code>, restores the Gradle cache, then runs <code style="font:12.5px ui-monospace,monospace;color:var(--color-neutral-200);background:var(--color-neutral-900);padding:1px 6px;border-radius:4px">./gradlew assembleDebug</code> — GitHub's own runner does the actual compiling, so no toolchain has to exist on my machine at all. The last step hands the resulting APK to <code style="font:12.5px ui-monospace,monospace;color:var(--color-neutral-200);background:var(--color-neutral-900);padding:1px 6px;border-radius:4px">actions/upload-artifact</code>, which attaches it to that workflow run. Once the run finishes, the APK shows up as a zipped download on the run's summary page in the Actions tab — grab it, unzip, install. Nothing gets published to a store, so this manual pull is the whole distribution path for now.</p>
   <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0">Metadata comes from two APIs stitched together: TMDB for search, trending titles, synopses, cast, posters, and region-aware "where to watch" data, and OMDb — queried by IMDb ID — for the IMDb rating and Rotten Tomatoes score TMDB doesn't carry itself. Neither IMDb nor Rotten Tomatoes exposes a public API of their own, so this pairing is the practical ceiling on what a hobby project can pull in without scraping — see below for where that shows.</p>
 </div>
 

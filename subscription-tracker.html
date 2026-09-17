@@ -39,6 +39,12 @@ a:hover{color:var(--color-neutral-200)}
 .gen-eyebrow{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
 .gen-badge{font:500 11px/1 var(--font-body);letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-300)}
 .gen-badge.current{border-color:var(--color-accent);color:var(--color-accent)}
+.hero{display:flex;gap:var(--space-6);align-items:center;margin-bottom:var(--space-6)}
+.hero-icon{flex:none}
+.hero-icon img{width:84px;height:84px;border-radius:var(--radius-lg);display:block}
+.hero-meta{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
+.hero-eyebrow{font:500 12px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-300)}
+@media (max-width:560px){.hero{flex-direction:column;align-items:flex-start;gap:var(--space-4)}}
 .screens{
   display:flex;
   gap:var(--space-4);
@@ -84,8 +90,13 @@ a:hover{color:var(--color-neutral-200)}
 </div>
 
 <div class="wrap" style="padding-bottom:var(--space-6)">
-  <div style="font:500 12px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-300);margin-bottom:var(--space-3)">Finance</div>
-  <h1 style="font:500 42px/1.15 var(--font-heading);margin:0 0 var(--space-3);color:var(--color-text);max-width:20ch">Subscription Tracker</h1>
+  <div class="hero">
+    <div class="hero-icon"><img src="img/subscription-tracker-icon.png" alt="Subscription Tracker icon"></div>
+    <div>
+      <div class="hero-meta"><span class="hero-eyebrow">Finance</span></div>
+      <h1 style="font:500 42px/1.15 var(--font-heading);margin:0;color:var(--color-text);max-width:20ch">Subscription Tracker</h1>
+    </div>
+  </div>
   <p style="font:400 16px/1.6 var(--font-body);color:var(--color-neutral-200);margin:0 0 var(--space-4)">Every recurring charge, in one place, entirely on-device — total due this month, what's renewing next, and where the money actually goes by category and by card.</p>
 </div>
 
