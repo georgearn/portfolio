@@ -1,5 +1,21 @@
+// Scroll reveal: .reveal elements fade in once as they enter the viewport.
+document.documentElement.classList.add('js');
+document.addEventListener('DOMContentLoaded', function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function (el) { el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+  els.forEach(function (el) { io.observe(el); });
+});
+
 // Lightbox gallery for .screens image grids.
-// Each .screens container becomes its own gallery — click a screenshot to
+// Each .screens container becomes its own gallery. Click a screenshot to
 // open it full-size, with prev/next and Escape/arrow-key navigation.
 (function () {
   function initGallery(root) {
@@ -8,11 +24,13 @@
 
     var overlay = document.createElement('div');
     overlay.className = 'lightbox';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
     overlay.innerHTML =
-      '<button class="lightbox-close" aria-label="Close">&times;</button>' +
-      '<button class="lightbox-prev" aria-label="Previous screenshot">&larr;</button>' +
+      '<button class="lightbox-close" aria-label="Close"><i class="ph ph-x"></i></button>' +
+      '<button class="lightbox-prev" aria-label="Previous screenshot"><i class="ph ph-arrow-left"></i></button>' +
       '<img class="lightbox-img lighten" src="" alt="">' +
-      '<button class="lightbox-next" aria-label="Next screenshot">&rarr;</button>' +
+      '<button class="lightbox-next" aria-label="Next screenshot"><i class="ph ph-arrow-right"></i></button>' +
       '<div class="lightbox-caption"></div>';
     document.body.appendChild(overlay);
 
@@ -35,7 +53,6 @@
     }
 
     figures.forEach(function (fig, i) {
-      fig.querySelector('img').style.cursor = 'zoom-in';
       fig.addEventListener('click', function () { show(i); });
     });
 

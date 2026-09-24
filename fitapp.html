@@ -3,159 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#292b31">
-<title>FitApp — Yurii Arnautov</title>
+<meta name="theme-color" content="#1c1d22">
+<title>FitApp | Yurii Arnautov</title>
 <link rel="icon" type="image/png" sizes="32x32" href="img/fitapp-favicon-32.png">
 <link rel="apple-touch-icon" href="img/fitapp-apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="img/fitapp-icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="img/fitapp-icon-512.png">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-:root{
-  --color-bg:#161826; --color-surface:#232532; --color-text:#e9e9ed;
-  --color-accent:#9184d9; --color-accent-2:#a7a1db;
-  --color-neutral-100:#f3f5fe; --color-neutral-200:#e4e7f5; --color-neutral-300:#cfd3e5;
-  --color-neutral-400:#b2b6ca; --color-neutral-500:#9397ab; --color-neutral-600:#75798c;
-  --color-neutral-700:#595d6c; --color-neutral-800:#3f424d; --color-neutral-900:#292b31;
-  --font-heading:"Inter",system-ui,sans-serif; --font-heading-weight:500; --font-body:"Inter",system-ui,sans-serif;
-  --space-1:2.8px; --space-2:5.6px; --space-3:8.4px; --space-4:11.2px; --space-6:16.8px; --space-8:22.4px;
-  --radius-md:8px; --radius-lg:14px;
-}
-*{box-sizing:border-box;}
-body{margin:0;background:var(--color-neutral-900);color:var(--color-text);font-family:var(--font-body);font-size:15px;line-height:1.55;}
-h1,h2,h3,h4{font-family:var(--font-heading);font-weight:var(--font-heading-weight);margin:0;}
-a{color:var(--color-neutral-300);text-decoration:none}
-a:hover{color:var(--color-neutral-200)}
-:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;}
-.lighten{mix-blend-mode:lighten;background-color:transparent}
-.wrap{max-width:1040px;margin:0 auto;padding:0 var(--space-6)}
-.feature{padding:var(--space-6);border-radius:var(--radius-lg);background:var(--color-neutral-800);border:1px solid var(--color-neutral-700)}
-.feature .num{font:500 12px/1 ui-monospace,monospace;color:var(--color-neutral-300);margin-bottom:var(--space-3)}
-.feature .ft{font:500 16px/1.3 var(--font-heading);margin:0 0 var(--space-2)}
-.feature .fd{font:400 13.5px/1.55 var(--font-body);color:var(--color-neutral-200);margin:0}
-.fgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
-@media (max-width:760px){.fgrid{grid-template-columns:1fr}}
-.tag{font:500 11px/1 var(--font-body);padding:5px 10px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-200)}
-.badge{display:inline-flex;align-items:center;gap:6px;font:500 10.5px/1 var(--font-body);letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-300)}
-.hero{display:flex;gap:var(--space-6);align-items:center;margin-bottom:var(--space-6)}
-.hero-icon{flex:none}
-.hero-icon img{width:84px;height:84px;border-radius:var(--radius-lg);display:block}
-.hero-meta{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
-.hero-eyebrow{font:500 12px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-300)}
-@media (max-width:560px){.hero{gap:var(--space-4)}.hero-icon img{width:56px;height:56px}.hero h1{font-size:26px!important}}
-.navrow a.back{display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--font-body);color:var(--color-neutral-300)}
-.navrow a.back:hover{color:var(--color-neutral-200)}
-.screens{
-  display:flex;
-  gap:var(--space-4);
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  padding-bottom:var(--space-3);
-  scrollbar-width:thin;
-  scrollbar-color:var(--color-neutral-700) transparent;
-}
-.screens::-webkit-scrollbar{height:6px}
-.screens::-webkit-scrollbar-track{background:transparent}
-.screens::-webkit-scrollbar-thumb{background:var(--color-neutral-700);border-radius:99px}
-.screens figure{margin:0;flex:0 0 auto;width:230px;scroll-snap-align:start}
-.screens img{width:100%;display:block;border-radius:var(--radius-md);background:var(--color-neutral-900)}
-.screens figcaption{font-size:11px;margin-top:var(--space-2);color:color-mix(in srgb, var(--color-text) 55%, transparent)}
-.screens img{cursor:zoom-in;transition:opacity .15s}
-.screens img:hover{opacity:.85}
-
-.lightbox{position:fixed;inset:0;background:rgba(10,11,16,.93);display:none;align-items:center;justify-content:center;flex-direction:column;padding:var(--space-8);z-index:1000}
-.lightbox.open{display:flex}
-.lightbox-img{max-width:88vw;max-height:78vh;object-fit:contain;border-radius:var(--radius-md)}
-.lightbox-caption{color:var(--color-neutral-300);font-size:13px;margin-top:var(--space-4)}
-.lightbox-close,.lightbox-prev,.lightbox-next{
-  position:absolute;display:flex;align-items:center;justify-content:center;
-  border-radius:50%;border:1px solid var(--color-neutral-600);background:transparent;
-  color:var(--color-text);cursor:pointer;transition:border-color .15s,color .15s;
-}
-.lightbox-close:hover,.lightbox-prev:hover,.lightbox-next:hover{border-color:var(--color-accent);color:var(--color-accent)}
-.lightbox-close{top:var(--space-6);right:var(--space-6);width:40px;height:40px;font-size:22px;line-height:1}
-.lightbox-prev,.lightbox-next{top:50%;transform:translateY(-50%);width:46px;height:46px;font-size:18px}
-.lightbox-prev{left:var(--space-6)}
-.lightbox-next{right:var(--space-6)}
-@media (max-width:600px){
-  .lightbox-prev{left:var(--space-2)}
-  .lightbox-next{right:var(--space-2)}
-}
-</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="wrap navrow" style="padding-top:var(--space-6);padding-bottom:var(--space-6)">
-  <a class="back" href="./index.html">&larr; All apps</a>
-</div>
+<header class="wrap nav">
+  <a class="link" href="./index.html"><i class="ph ph-arrow-left"></i>All apps</a>
+</header>
 
-<div class="wrap" style="padding-bottom:var(--space-6)">
-  <div class="hero">
-    <div class="hero-icon"><img src="img/fitapp-icon.png" alt="FitApp icon"></div>
-    <div>
-      <div class="hero-meta"><span class="hero-eyebrow">Health &amp; fitness</span></div>
-      <h1 style="font:500 42px/1.15 var(--font-heading);margin:0;color:var(--color-text);max-width:20ch">FitApp</h1>
+<main>
+<section class="wrap hero">
+  <div>
+    <div class="hero-title enter" style="--i:0">
+      <img src="img/fitapp-icon.png" alt="FitApp icon">
+      <div>
+        <div class="kicker">Health &amp; fitness</div>
+        <h1>FitApp</h1>
+      </div>
+    </div>
+    <p class="lede enter" style="--i:1">A tool for finding the next exercise, not logging the last one. Browse by muscle, generate a routine, or build one by hand.</p>
+    <div class="tags enter" style="--i:2">
+      <span class="tag">Flet</span><span class="tag">Python</span><span class="tag">WorkoutX API</span><span class="tag">Gemini 2.5 Flash</span><span class="tag">Gemini Nano</span><span class="tag">Material You</span>
     </div>
   </div>
-  <p style="font:400 16px/1.6 var(--font-body);color:var(--color-neutral-200);margin:0 0 var(--space-4)">A tool for finding the next exercise, not logging the last one — browse a full library by muscle group, generate a routine by rule or by AI, or build one by hand.</p>
-  <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
-    <span class="tag">Flet</span><span class="tag">Python</span><span class="tag">WorkoutX API</span><span class="tag">Gemini 2.5 Flash</span><span class="tag">Gemini Nano</span><span class="tag">Material You</span>
+  <div class="hero-shot enter" style="--i:2">
+    <img class="lighten" src="img/fitapp-body-map-selected.png" alt="FitApp body map with chest selected" fetchpriority="high">
   </div>
-</div>
+</section>
 
-<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
-  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">The idea is simple: after running the same routine for a while, I want fresh alternatives, not another app to log the same reps in. Freeletics got closest to what I wanted, but only its workout builder — bodyweight moves, band variations, that kind of variety. The tracking half never interested me, since a watch already does that job, so there's deliberately no start-workout or logging screen here.</p>
-  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">It's also where the engine changed: Kivy gave way to Flet. The first version was plain — a small, hand-picked exercise list grouped by muscle group. The real work started once I went looking for an exercise database worth building on, and separately, for a body model that could actually be pulled apart into regions a person could tap.</p>
-  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">Kivy draws every control from scratch, so a button, a list row, or a picker is a widget you style and maintain yourself — there's no design system underneath, just whatever you build. Flet renders through Flutter instead, so real Material 3 widgets — segmented buttons, bottom sheets, ColorScheme-aware theming — come built in and look native rather than hand-drawn. That's also what let the app follow the phone's light/dark setting and, on Android 12+, pull its accent color straight from the wallpaper (Material You) without me reimplementing any of that by hand. And it stays Python end to end: no bridging into a second UI language, one <code>flet build apk</code> away from a shippable Android build, with a <code>flet run --web</code> version usable straight in a browser tab for quick iteration.</p>
-  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0">None of that is free, though. Flet's Android build bundles the Flutter engine, so the APK is meaningfully larger than a comparable Kivy one. Its plugin ecosystem is younger and thinner, so anything Flutter can do that Flet hasn't wrapped yet — Material You's wallpaper-color extraction, here — means writing a small Flutter/Dart extension by hand instead of finding one already made. And being newer, its documentation and community answers are sparser than Kivy's decade-plus head start. For a small solo app where a modern, native-feeling UI was the whole point, that trade was worth making; for something that needs deep custom rendering or already has a large Kivy codebase behind it, it might not be.</p>
-</div>
+<section class="wrap section">
+  <h2 class="h2 reveal">Why it exists</h2>
+  <div class="prose reveal">
+    <p>The idea is simple: after running the same routine for a while, I want fresh alternatives, not another app to log the same reps in. Freeletics got closest to what I wanted, but only its workout builder: bodyweight moves, band variations, that kind of variety. The tracking half never interested me, since a watch already does that job, so there's deliberately no start-workout or logging screen here.</p>
+    <p>It's also where the engine changed: Kivy gave way to Flet. The first version was plain, a small hand-picked exercise list grouped by muscle group. The real work started once I went looking for an exercise database worth building on, and separately, for a body model that could actually be pulled apart into regions a person could tap.</p>
+  </div>
+</section>
 
-<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
-  <h2 style="font:500 22px/1.3 var(--font-heading);margin:0 0 var(--space-6)">What it does</h2>
-  <div class="fgrid" style="margin-bottom:var(--space-6)">
-    <div class="feature">
-      <div class="num">01</div>
-      <h3 class="ft">An interactive body map</h3>
-      <p class="fd">Tap a muscle, front or back, and see every exercise that targets it — sourced from the WorkoutX API. Finding a body model that could be split into clickable regions in the first place turned out to be the harder half of this.</p>
+<section class="wrap section">
+  <h2 class="h2 reveal">Kivy to Flet</h2>
+  <div class="rows">
+    <div class="r reveal"><h3>What Flet gives</h3><p>Kivy draws every control from scratch, so a button, a list row, or a picker is a widget you style and maintain yourself. There's no design system underneath, just whatever you build. Flet renders through Flutter instead, so real Material 3 widgets (segmented buttons, bottom sheets, ColorScheme-aware theming) come built in and look native rather than hand-drawn. That's also what let the app follow the phone's light/dark setting and, on Android 12+, pull its accent color straight from the wallpaper (Material You) without me reimplementing any of that by hand. And it stays Python end to end: no bridging into a second UI language, one <code>flet build apk</code> away from a shippable Android build, with a <code>flet run --web</code> version usable straight in a browser tab for quick iteration.</p></div>
+    <div class="r reveal"><h3>What it costs</h3><p>None of that is free, though. Flet's Android build bundles the Flutter engine, so the APK is meaningfully larger than a comparable Kivy one. Its plugin ecosystem is younger and thinner, so anything Flutter can do that Flet hasn't wrapped yet (Material You's wallpaper-color extraction, here) means writing a small Flutter/Dart extension by hand instead of finding one already made. And being newer, its documentation and community answers are sparser than Kivy's decade-plus head start. For a small solo app where a modern, native-feeling UI was the whole point, that trade was worth making; for something that needs deep custom rendering or already has a large Kivy codebase behind it, it might not be.</p></div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">What it does</h2>
+  <div class="features">
+    <div class="feature reveal">
+      <h3>An interactive body map</h3>
+      <p>Tap a muscle, front or back, and see every exercise that targets it, sourced from the WorkoutX API. Finding a body model that could be split into clickable regions in the first place turned out to be the harder half of this.</p>
     </div>
-    <div class="feature">
-      <div class="num">02</div>
-      <h3 class="ft">Two ways to build a routine</h3>
-      <p class="fd">Rule Builder for manual control — muscle groups, equipment on hand, exercise count, how many variations. AI Coach for an open request, handled by whichever engine is connected.</p>
+    <div class="feature reveal" style="--i:1">
+      <h3>Two ways to build a routine</h3>
+      <p>Rule Builder for manual control: muscle groups, equipment on hand, exercise count, how many variations. AI Coach for an open request, handled by whichever engine is connected.</p>
     </div>
-    <div class="feature">
-      <div class="num">03</div>
-      <h3 class="ft">On-device AI, where it's supported</h3>
-      <p class="fd">Wiring AI in meant exploring on-phone inference — Gemini Nano, via Android's AICore, runs the coach fully offline and privately, but only on the handful of Pixel phones AICore actually ships on, and only once the on-device model itself has downloaded (a multi-gigabyte one-time fetch). Everywhere else, a cloud Gemini 2.5 Flash fallback takes over, using the person's own API key rather than one baked into the app.</p>
+    <div class="feature reveal">
+      <h3>On-device AI, where it's supported</h3>
+      <p>Gemini Nano, via Android's AICore, runs the coach fully offline and privately, but only on the handful of Pixel phones AICore ships on, and only once the multi-gigabyte on-device model has downloaded. Everywhere else, a cloud Gemini 2.5 Flash fallback takes over, using the person's own API key rather than one baked into the app.</p>
     </div>
-    <div class="feature">
-      <div class="num">04</div>
-      <h3 class="ft">Keeping AI grounded to the real library</h3>
-      <p class="fd">The AI coach doesn't invent exercises — its prompt constrains it to the same WorkoutX-sourced library the Rule Builder draws from, so a generated routine can't reference a move without a real animation, form cues, and equipment tag behind it. The trade-off is capability: Gemini Nano's smaller on-device model needs a stricter, more repetitive prompt to stay inside that constraint reliably than the cloud model does, and it still occasionally needs a regenerate to come back with a clean, parseable result.</p>
+    <div class="feature reveal" style="--i:1">
+      <h3>Keeping AI grounded to the real library</h3>
+      <p>The AI coach doesn't invent exercises. Its prompt constrains it to the same WorkoutX-sourced library the Rule Builder draws from, so every move has a real animation, form cues, and equipment tag behind it. The trade-off: Gemini Nano's smaller model needs a stricter prompt to stay inside that constraint, and still occasionally needs a regenerate to return a clean, parseable result.</p>
     </div>
   </div>
-</div>
+</section>
 
-<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
-  <h2 style="font:500 22px/1.3 var(--font-heading);margin:0 0 var(--space-6)">Screens</h2>
-  <div class="screens">
-    <figure><img class="lighten" src="img/fitapp-body-map.png" alt="Interactive body map"><figcaption>Body — tap a muscle to explore</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-body-map-selected.png" alt="Body map with chest selected, showing exercise count"><figcaption>Body — muscle selected, jump straight to exercises</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-chest-exercises.png" alt="Chest exercises list"><figcaption>Exercise list by muscle group</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-exercise-detail.gif" alt="Exercise detail sheet opening and browsing variations"><figcaption>Exercise detail — form, targets, variations</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-workouts-empty.png" alt="My Workouts empty state"><figcaption>Saved routines</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-generator-rulebuilder.png" alt="Workout Generator, Rule Builder mode"><figcaption>Generator — Rule Builder</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-generator-aicoach.png" alt="Workout Generator, AI Coach mode"><figcaption>Generator — AI Coach, dual engine</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-settings-apikey.png" alt="Settings, Gemini API key for AI Coach"><figcaption>Settings — Gemini API key for AI Coach</figcaption></figure>
-    <figure><img class="lighten" src="img/fitapp-manual-builder.gif" alt="Manual workout builder flow"><figcaption>Manual Builder — muscles, equipment, add exercises</figcaption></figure>
+<section class="wrap section">
+  <h2 class="h2 reveal">Screens</h2>
+  <div class="screens reveal">
+    <figure><img class="lighten" loading="lazy" src="img/fitapp-body-map.png" alt="Interactive body map"><figcaption>Body map: tap a muscle to explore</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/fitapp-body-map-selected.png" alt="Body map with chest selected, showing exercise count"><figcaption>Muscle selected, jump to exercises</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/fitapp-chest-exercises.png" alt="Chest exercises list"><figcaption>Exercise list by muscle group</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/fitapp-exercise-detail.gif" alt="Exercise detail sheet opening and browsing variations"><figcaption>Exercise detail: form, targets, variations</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/fitapp-workouts-empty.png" alt="My Workouts empty state"><figcaption>Saved routines</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/fitapp-generator-rulebuilder.png" alt="Workout Generator, Rule Builder mode"><figcaption>Generator: Rule Builder</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/fitapp-generator-aicoach.png" alt="Workout Generator, AI Coach mode"><figcaption>Generator: AI Coach, dual engine</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/fitapp-settings-apikey.png" alt="Settings, Gemini API key for AI Coach"><figcaption>Settings: Gemini API key</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/fitapp-manual-builder.gif" alt="Manual workout builder flow"><figcaption>Manual Builder: muscles, equipment, exercises</figcaption></figure>
   </div>
-</div>
+</section>
+</main>
 
-<div class="wrap navrow" style="padding-bottom:calc(var(--space-8) * 1.3);border-top:1px solid var(--color-neutral-800);padding-top:var(--space-6);display:flex;justify-content:space-between">
-  <a class="back" href="./subscription-tracker.html">&larr; Subscription Tracker</a>
-  <a class="back" href="./showtracker.html">Show Tracker &rarr;</a>
-</div>
+<nav class="wrap pager" aria-label="More apps">
+  <a href="./subscription-tracker.html"><span>Previous</span>Subscription Tracker</a>
+  <a class="next" href="./showtracker.html"><span>Next</span>Show Tracker</a>
+</nav>
 
-<script src="gallery.js" defer></script>
+<script src="gallery.js"></script>
 </body>
 </html>

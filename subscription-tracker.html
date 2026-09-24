@@ -3,200 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#292b31">
-<title>Subscription Tracker — Yurii Arnautov</title>
+<meta name="theme-color" content="#1c1d22">
+<title>Subscription Tracker | Yurii Arnautov</title>
 <link rel="icon" type="image/png" sizes="32x32" href="img/subscription-tracker-favicon-32.png">
 <link rel="apple-touch-icon" href="img/subscription-tracker-apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="img/subscription-tracker-icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="img/subscription-tracker-icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="styles.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-:root{
-  --color-bg:#161826; --color-surface:#232532; --color-text:#e9e9ed;
-  --color-accent:#9184d9; --color-accent-2:#a7a1db;
-  --color-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
-  --color-neutral-100:#f3f5fe; --color-neutral-200:#e4e7f5; --color-neutral-300:#cfd3e5;
-  --color-neutral-400:#b2b6ca; --color-neutral-500:#9397ab; --color-neutral-600:#75798c;
-  --color-neutral-700:#595d6c; --color-neutral-800:#3f424d; --color-neutral-900:#292b31;
-  --color-accent-800:#423a6a; --color-accent-100:#f5f4ff;
-  --font-heading:"Inter",system-ui,sans-serif; --font-heading-weight:500; --font-body:"Inter",system-ui,sans-serif;
-  --space-1:2.8px; --space-2:5.6px; --space-3:8.4px; --space-4:11.2px; --space-6:16.8px; --space-8:22.4px;
-  --radius-md:8px; --radius-lg:14px;
-}
-*{box-sizing:border-box;}
-body{margin:0;background:var(--color-neutral-900);color:var(--color-text);font-family:var(--font-body);font-size:15px;line-height:1.55;}
-h1,h2,h3,h4{font-family:var(--font-heading);font-weight:var(--font-heading-weight);margin:0;}
-a{color:var(--color-neutral-300);text-decoration:none}
-a:hover{color:var(--color-neutral-200)}
-:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;}
-::selection{background:color-mix(in srgb, var(--color-accent) 30%, transparent);}
-.lighten{mix-blend-mode:lighten;background-color:transparent}
-.wrap{max-width:1040px;margin:0 auto;padding:0 var(--space-6)}
-.feature{padding:var(--space-6);border-radius:var(--radius-lg);background:var(--color-neutral-800);border:1px solid var(--color-neutral-700)}
-.feature .num{font:500 12px/1 ui-monospace,monospace;color:var(--color-neutral-300);margin-bottom:var(--space-3)}
-.feature .ft{font:500 16px/1.3 var(--font-heading);margin:0 0 var(--space-2)}
-.feature .fd{font:400 13.5px/1.55 var(--font-body);color:var(--color-neutral-200);margin:0}
-.fgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
-@media (max-width:760px){.fgrid{grid-template-columns:1fr}}
-.tag{font:500 11px/1 var(--font-body);padding:5px 10px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-200)}
-.navrow a.back{display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--font-body);color:var(--color-neutral-300)}
-.navrow a.back:hover{color:var(--color-neutral-200)}
-.gen-eyebrow{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
-.gen-badge{font:500 11px/1 var(--font-body);letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:999px;border:1px solid var(--color-neutral-600);color:var(--color-neutral-300)}
-.gen-badge.current{border-color:var(--color-accent);color:var(--color-accent)}
-.hero{display:flex;gap:var(--space-6);align-items:center;margin-bottom:var(--space-6)}
-.hero-icon{flex:none}
-.hero-icon img{width:84px;height:84px;border-radius:var(--radius-lg);display:block}
-.hero-meta{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
-.hero-eyebrow{font:500 12px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-300)}
-@media (max-width:560px){.hero{gap:var(--space-4)}.hero-icon img{width:56px;height:56px}.hero h1{font-size:26px!important}}
-.screens{
-  display:flex;
-  gap:var(--space-4);
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  padding-bottom:var(--space-3);
-  scrollbar-width:thin;
-  scrollbar-color:var(--color-neutral-700) transparent;
-}
-.screens::-webkit-scrollbar{height:6px}
-.screens::-webkit-scrollbar-track{background:transparent}
-.screens::-webkit-scrollbar-thumb{background:var(--color-neutral-700);border-radius:99px}
-.screens figure{margin:0;flex:0 0 auto;width:230px;scroll-snap-align:start}
-.screens img{width:100%;display:block;border-radius:var(--radius-md);background:var(--color-neutral-900)}
-.screens figcaption{font-size:11px;margin-top:var(--space-2);color:color-mix(in srgb, var(--color-text) 55%, transparent)}
-.screens img{cursor:zoom-in;transition:opacity .15s}
-.screens img:hover{opacity:.85}
-
-.lightbox{position:fixed;inset:0;background:rgba(10,11,16,.93);display:none;align-items:center;justify-content:center;flex-direction:column;padding:var(--space-8);z-index:1000}
-.lightbox.open{display:flex}
-.lightbox-img{max-width:88vw;max-height:78vh;object-fit:contain;border-radius:var(--radius-md)}
-.lightbox-caption{color:var(--color-neutral-300);font-size:13px;margin-top:var(--space-4)}
-.lightbox-close,.lightbox-prev,.lightbox-next{
-  position:absolute;display:flex;align-items:center;justify-content:center;
-  border-radius:50%;border:1px solid var(--color-neutral-600);background:transparent;
-  color:var(--color-text);cursor:pointer;transition:border-color .15s,color .15s;
-}
-.lightbox-close:hover,.lightbox-prev:hover,.lightbox-next:hover{border-color:var(--color-accent);color:var(--color-accent)}
-.lightbox-close{top:var(--space-6);right:var(--space-6);width:40px;height:40px;font-size:22px;line-height:1}
-.lightbox-prev,.lightbox-next{top:50%;transform:translateY(-50%);width:46px;height:46px;font-size:18px}
-.lightbox-prev{left:var(--space-6)}
-.lightbox-next{right:var(--space-6)}
-@media (max-width:600px){
-  .lightbox-prev{left:var(--space-2)}
-  .lightbox-next{right:var(--space-2)}
-}
+.gen-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin-bottom:16px}
+.gen-title{font-size:clamp(26px,3.4vw,34px);line-height:1.15;margin-bottom:12px}
+.gen-sub{color:var(--text-2);font-size:17px;line-height:1.6;max-width:60ch;margin-bottom:20px}
+.gen-body{margin:36px 0 44px}
 </style>
 </head>
 <body>
 
-<div class="wrap navrow" style="padding-top:var(--space-6);padding-bottom:var(--space-6)">
-  <a class="back" href="./index.html">&larr; All apps</a>
-</div>
+<header class="wrap nav">
+  <a class="link" href="./index.html"><i class="ph ph-arrow-left"></i>All apps</a>
+</header>
 
-<div class="wrap" style="padding-bottom:var(--space-6)">
-  <div class="hero">
-    <div class="hero-icon"><img src="img/subscription-tracker-icon.png" alt="Subscription Tracker icon"></div>
-    <div>
-      <div class="hero-meta"><span class="hero-eyebrow">Finance</span></div>
-      <h1 style="font:500 42px/1.15 var(--font-heading);margin:0;color:var(--color-text);max-width:20ch">Subscription Tracker</h1>
+<main>
+<section class="wrap hero">
+  <div>
+    <div class="hero-title enter" style="--i:0">
+      <img src="img/subscription-tracker-icon.png" alt="Subscription Tracker icon">
+      <div>
+        <div class="kicker">Finance</div>
+        <h1>Subscription Tracker</h1>
+      </div>
+    </div>
+    <p class="lede enter" style="--i:1">Every recurring charge in one place, entirely on-device. What's due this month, what renews next, and where the money goes.</p>
+    <div class="tags enter" style="--i:2">
+      <span class="tag">Python + Kivy</span><span class="tag">Kotlin + Compose</span>
     </div>
   </div>
-  <p style="font:400 16px/1.6 var(--font-body);color:var(--color-neutral-200);margin:0 0 var(--space-4)">Every recurring charge, in one place, entirely on-device — total due this month, what's renewing next, and where the money actually goes by category and by card.</p>
-</div>
+  <div class="hero-shot enter" style="--i:2">
+    <img class="lighten" src="img/kotlin-subs-overview-blurred.png" alt="Calendar overview in the Kotlin version" fetchpriority="high">
+  </div>
+</section>
 
-<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
-  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">I kept losing track of what was charging where — a card here, a yearly renewal there, currencies mixed in. Spreadsheets held the numbers but never warned me ahead of a renewal, and every tracker app I tried wanted an account or a cloud sync just to track subscriptions. So the brief stayed simple: one place, on the device, nothing more.</p>
-  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0">It's also where a slower run of ordinary Python — lists and dictionaries, loops, functions to stop repeating the same five lines, then file I/O — turned into something with a UI. Kivy was the on-ramp from script to window. This app was the first project where that pairing, data underneath and a real interface on top, had to hold up to daily use rather than run once and get thrown away — which is most of why it was rebuilt properly a second time.</p>
-</div>
+<section class="wrap section">
+  <h2 class="h2 reveal">Why it exists</h2>
+  <div class="prose reveal">
+    <p>I kept losing track of what was charging where: a card here, a yearly renewal there, currencies mixed in. Spreadsheets held the numbers but never warned me ahead of a renewal, and every tracker app I tried wanted an account or a cloud sync just to track subscriptions. So the brief stayed simple: one place, on the device, nothing more.</p>
+    <p>It's also where a slower run of ordinary Python (lists and dictionaries, loops, functions to stop repeating the same five lines, then file I/O) turned into something with a UI. Kivy was the on-ramp from script to window. This app was the first project where that pairing, data underneath and a real interface on top, had to hold up to daily use rather than run once and get thrown away. That is most of why it was rebuilt properly a second time.</p>
+  </div>
+</section>
 
 <!-- GENERATION 1 -->
-<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3)">
-  <div class="gen-eyebrow">
-    <span class="gen-badge">Generation 1</span>
-    <a href="https://github.com/georgearn/Subscription-tracker-app" target="_blank" style="font-size:12px;color:var(--color-neutral-400)">github.com/georgearn/Subscription-tracker-app &nearr;</a>
+<section class="wrap section">
+  <div class="gen-head reveal">
+    <span class="pill">Generation 1</span>
+    <a class="link" href="https://github.com/georgearn/Subscription-tracker-app" target="_blank" rel="noopener">Source on GitHub <i class="ph ph-arrow-up-right"></i></a>
   </div>
-  <h2 style="font:500 24px/1.3 var(--font-heading);margin:0 0 var(--space-2)">Python + Kivy</h2>
-  <p style="font:400 14px/1.6 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">The first working version — cross-compiled to an Android APK with Buildozer, built inside Docker for a reproducible toolchain.</p>
-  <div style="display:flex;gap:var(--space-2);margin-bottom:var(--space-6)">
+  <h2 class="gen-title reveal">Python + Kivy</h2>
+  <p class="gen-sub reveal">The first working version, cross-compiled to an Android APK with Buildozer, built inside Docker for a reproducible toolchain.</p>
+  <div class="tags reveal">
     <span class="tag">Python</span><span class="tag">Kivy</span><span class="tag">SQLite</span><span class="tag">Buildozer</span><span class="tag">Docker</span><span class="tag">pyjnius</span>
   </div>
 
-  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-6)">The first version was plain — three tabs: add a subscription, a monthly aggregate, a yearly aggregate, nothing more. From there it turned into a study of Android UI conventions I hadn't worked with before: a floating action button, real navigation tabs, something that looked like a modern app instead of a form. Kivy pushed back on some of it — its FAB has no concept of reacting to scroll, so it just had to sit on screen permanently, the opposite of how a native FAB usually behaves. Analytics came next, once the base screens were solid — breakdowns by category and by card. The last thing added, with the app otherwise finished, was picking accent colors by hand in the spirit of Material You, since Kivy has no access to the system's own dynamic color.</p>
-
-  <div class="fgrid" style="margin-bottom:var(--space-6)">
-    <div class="feature">
-      <div class="num">01</div>
-      <h3 class="ft">Docker, and why it was there</h3>
-      <p class="fd">Buildozer's Android toolchain is fragile to set up natively on Windows, so the build ran inside a container pinned to a known-good Linux image — reproducible, but every UI change meant a full rebuild-and-flash cycle instead of hot reload.</p>
-    </div>
-    <div class="feature">
-      <div class="num">02</div>
-      <h3 class="ft">Notifications, the hard way</h3>
-      <p class="fd">Kivy has no native Android notification API. Reminders were bridged through pyjnius into Android's Java APIs, wrapped in a foreground service — functional, but some OEM battery settings could still suppress it.</p>
-    </div>
-    <div class="feature">
-      <div class="num">03</div>
-      <h3 class="ft">What was missing</h3>
-      <p class="fd">No calendar or schedule view yet, and no dynamic theming — colors were hardcoded rather than pulled from the system palette. Both became the brief for generation 2.</p>
-    </div>
+  <div class="prose gen-body reveal">
+    <p>The first version was plain: three tabs for adding a subscription, a monthly aggregate, and a yearly aggregate. From there it turned into a study of Android UI conventions I hadn't worked with before: a floating action button, real navigation tabs, something that looked like a modern app instead of a form. Kivy pushed back on some of it. Its FAB has no concept of reacting to scroll, so it had to sit on screen permanently, the opposite of how a native FAB behaves. Analytics came next, with breakdowns by category and by card. The last addition was picking accent colors by hand in the spirit of Material You, since Kivy has no access to the system's own dynamic color.</p>
   </div>
 
-  <div class="screens">
-    <figure><img class="lighten" src="img/subscription-tracker-list-blurred.png" alt="Subscription list"><figcaption>Subscription list</figcaption></figure>
-    <figure><img class="lighten" src="img/subscription-tracker-schedule-blurred.png" alt="Payment schedule"><figcaption>Payment schedule</figcaption></figure>
-    <figure><img class="lighten" src="img/subscription-tracker-cards-blurred.png" alt="By-card view"><figcaption>By-card view</figcaption></figure>
-    <figure><img class="lighten" src="img/subscription-tracker-categories-blurred.png" alt="By-category view"><figcaption>By-category view</figcaption></figure>
+  <div class="rows" style="margin-bottom:44px">
+    <div class="r reveal"><h3>Docker, and why it was there</h3><p>Buildozer's Android toolchain is fragile to set up natively on Windows, so the build ran inside a container pinned to a known-good Linux image. Reproducible, but every UI change meant a full rebuild-and-flash cycle instead of hot reload.</p></div>
+    <div class="r reveal"><h3>Notifications, the hard way</h3><p>Kivy has no native Android notification API. Reminders were bridged through pyjnius into Android's Java APIs, wrapped in a foreground service. Functional, but some OEM battery settings could still suppress it.</p></div>
+    <div class="r reveal"><h3>What was missing</h3><p>No calendar or schedule view yet, and no dynamic theming: colors were hardcoded rather than pulled from the system palette. Both became the brief for generation 2.</p></div>
   </div>
-</div>
+
+  <div class="screens reveal">
+    <figure><img class="lighten" loading="lazy" src="img/subscription-tracker-list-blurred.png" alt="Subscription list"><figcaption>Subscription list</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/subscription-tracker-schedule-blurred.png" alt="Payment schedule"><figcaption>Payment schedule</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/subscription-tracker-cards-blurred.png" alt="By-card view"><figcaption>By-card view</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/subscription-tracker-categories-blurred.png" alt="By-category view"><figcaption>By-category view</figcaption></figure>
+  </div>
+</section>
 
 <!-- GENERATION 2 -->
-<div class="wrap" style="padding-bottom:calc(var(--space-8) * 1.3);border-top:1px solid var(--color-neutral-800);padding-top:calc(var(--space-8) * 1.3)">
-  <div class="gen-eyebrow">
-    <span class="gen-badge current">Generation 2 — current</span>
-    <a href="https://github.com/georgearn/Subs-tracker-kotlin-rev" target="_blank" style="font-size:12px;color:var(--color-neutral-400)">github.com/georgearn/Subs-tracker-kotlin-rev &nearr;</a>
+<section class="wrap section">
+  <div class="gen-head reveal">
+    <span class="pill accent">Generation 2, current</span>
+    <a class="link" href="https://github.com/georgearn/Subs-tracker-kotlin-rev" target="_blank" rel="noopener">Source on GitHub <i class="ph ph-arrow-up-right"></i></a>
   </div>
-  <h2 style="font:500 24px/1.3 var(--font-heading);margin:0 0 var(--space-2)">Kotlin + Jetpack Compose</h2>
-  <p style="font:400 14px/1.6 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-4)">A full rebase — native, offline-first, MVVM with Clean Architecture boundaries. Nothing leaves the device.</p>
-  <div style="display:flex;gap:var(--space-2);margin-bottom:var(--space-6)">
+  <h2 class="gen-title reveal">Kotlin + Jetpack Compose</h2>
+  <p class="gen-sub reveal">A full rebuild: native, offline-first, MVVM with Clean Architecture boundaries. Nothing leaves the device.</p>
+  <div class="tags reveal">
     <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Material 3</span><span class="tag">Room</span><span class="tag">WorkManager</span><span class="tag">MVVM</span>
   </div>
 
-  <p style="font:400 14.5px/1.65 var(--font-body);color:var(--color-neutral-300);margin:0 0 var(--space-6)">The rebase kept the same logic and largely the same screens the Kivy version had already settled on — this wasn't a redesign, it was the same app done properly. What changed was what the platform could actually do with it: the FAB gained real behavior, including hiding on scroll instead of sitting fixed on screen the whole time. Settings hooked into the system's own settings surface instead of being a bespoke screen bolted on. And where Kivy needed things enforced by hand, or just used by convention — what counts as tappable, how far a touch target should reach — Compose has defined rules for that, so it came for free instead of being rebuilt.</p>
+  <div class="prose gen-body reveal">
+    <p>The rebuild kept the same logic and largely the same screens the Kivy version had already settled on. This wasn't a redesign, it was the same app done properly. What changed was what the platform could do with it: the FAB gained real behavior, including hiding on scroll. Settings hooked into the system's own settings surface instead of being a bespoke screen bolted on. And where Kivy needed things enforced by hand (what counts as tappable, how far a touch target should reach), Compose has defined rules, so it came for free.</p>
+  </div>
 
-  <div class="fgrid" style="margin-bottom:var(--space-6)">
-    <div class="feature">
-      <div class="num">01</div>
-      <h3 class="ft">A functional FAB and real settings</h3>
-      <p class="fd">The add button now opens a proper add/edit flow. Settings grew into full sections — language, theme, currency, reminders — instead of hardcoded defaults.</p>
+  <div class="features" style="margin-bottom:44px">
+    <div class="feature reveal">
+      <h3>A functional FAB and real settings</h3>
+      <p>The add button now opens a proper add/edit flow. Settings grew into full sections (language, theme, currency, reminders) instead of hardcoded defaults.</p>
     </div>
-    <div class="feature">
-      <div class="num">02</div>
-      <h3 class="ft">Native notifications</h3>
-      <p class="fd">Reminders run on WorkManager — no JNI bridging, no foreground-service workaround, just the platform's own scheduling.</p>
+    <div class="feature reveal" style="--i:1">
+      <h3>Native notifications</h3>
+      <p>Reminders run on WorkManager. No JNI bridging, no foreground-service workaround, just the platform's own scheduling.</p>
     </div>
-    <div class="feature">
-      <div class="num">03</div>
-      <h3 class="ft">Calendar view and dynamic color</h3>
-      <p class="fd">A calendar-first overview surfaces what's due by day, and Material 3's dynamic accent pulls the UI palette straight from the device wallpaper.</p>
+    <div class="feature reveal">
+      <h3>Calendar view and dynamic color</h3>
+      <p>A calendar-first overview surfaces what's due by day, and Material 3's dynamic accent pulls the UI palette straight from the device wallpaper.</p>
     </div>
   </div>
 
-  <div class="screens">
-    <figure><img class="lighten" src="img/kotlin-subs-list-blurred.png" alt="Subscription list, Kotlin version"><figcaption>Subscription list</figcaption></figure>
-    <figure><img class="lighten" src="img/kotlin-subs-overview-blurred.png" alt="Calendar overview"><figcaption>Calendar overview</figcaption></figure>
-    <figure><img class="lighten" src="img/kotlin-subs-analytics-card-blurred.png" alt="Analytics by card"><figcaption>Analytics — by card</figcaption></figure>
-    <figure><img class="lighten" src="img/kotlin-subs-analytics-category-blurred.png" alt="Analytics by category"><figcaption>Analytics — by category</figcaption></figure>
-    <figure><img class="lighten" src="img/kotlin-subs-settings.png" alt="Settings screen"><figcaption>Settings — theme, currency, reminders</figcaption></figure>
+  <div class="screens reveal">
+    <figure><img class="lighten" loading="lazy" src="img/kotlin-subs-list-blurred.png" alt="Subscription list, Kotlin version"><figcaption>Subscription list</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/kotlin-subs-overview-blurred.png" alt="Calendar overview"><figcaption>Calendar overview</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/kotlin-subs-analytics-card-blurred.png" alt="Analytics by card"><figcaption>Analytics by card</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/kotlin-subs-analytics-category-blurred.png" alt="Analytics by category"><figcaption>Analytics by category</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/kotlin-subs-settings.png" alt="Settings screen"><figcaption>Settings: theme, currency, reminders</figcaption></figure>
   </div>
-</div>
+</section>
+</main>
 
+<nav class="wrap pager" aria-label="More apps">
+  <a href="./index.html"><span>Back to</span>All apps</a>
+  <a class="next" href="./fitapp.html"><span>Next</span>FitApp</a>
+</nav>
 
-<div class="wrap navrow" style="padding-bottom:calc(var(--space-8) * 1.3);border-top:1px solid var(--color-neutral-800);padding-top:var(--space-6);display:flex;justify-content:space-between">
-  <a class="back" href="./index.html">&larr; All apps</a>
-  <a class="back" href="./fitapp.html">FitApp &rarr;</a>
-</div>
-
-<script src="gallery.js" defer></script>
+<script src="gallery.js"></script>
 </body>
 </html>
