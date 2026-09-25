@@ -49,8 +49,9 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
 .c-fit .shots .alt{display:none}
 .c-show{grid-column:span 3}
 .c-show .shots{--n:3}
-.c-fr{grid-column:span 3;background:linear-gradient(160deg,var(--accent-soft),transparent 70%),var(--bg-raised);justify-content:space-between}
-.c-fr .big{font-size:44px;color:var(--accent)}
+.c-fr{grid-column:span 3;background:linear-gradient(160deg,var(--accent-soft),transparent 70%),var(--bg-raised)}
+.c-fr .shots{--n:1;width:46%;margin-left:auto;margin-right:auto}
+.c-fr .shots img{mix-blend-mode:lighten}
 @media (max-width:1023px){
   .c-subs,.c-fit,.c-show,.c-fr{grid-column:span 3}
   .c-subs .shots{--n:2}
@@ -58,6 +59,7 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
   .c-show .shots{--n:2}
   .c-fit .shots{width:100%;--n:2}
   .c-fit .shots .alt{display:block}
+  .c-fr .shots{width:62%}
 }
 @media (max-width:767px){
   .home-hero{grid-template-columns:1fr;min-height:0;padding-top:16px}
@@ -67,6 +69,7 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
   .cell{padding:22px}
   .cell .go{top:22px;right:22px}
   .cell .shots,.c-subs .shots,.c-show .shots{--n:2;margin-bottom:-90px}
+  .c-fr .shots{--n:1;width:58%}
 }
 .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-block:32px 40px;border-top:1px solid var(--line);font-size:14px;color:var(--text-3)}
 </style>
@@ -130,11 +133,10 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
     </a>
     <a class="cell c-fr reveal" style="--i:1" href="./french.html">
       <i class="ph ph-arrow-up-right go" aria-hidden="true"></i>
-      <i class="ph ph-book-open-text big" aria-hidden="true"></i>
-      <div>
-        <span class="pill" style="margin-bottom:16px">Coming soon</span>
-        <h3 style="margin-bottom:8px">French Grammar</h3>
-        <p>Explore the rules, or drill your weak points.</p>
+      <div class="top"><img src="img/french-icon.png" alt=""><div><h3>French Grammar Quest</h3><div class="cat">Education</div></div></div>
+      <p>One rule at a time: understand it, drill it, and watch a map of what you've covered grow.</p>
+      <div class="shots">
+        <img loading="lazy" src="img/french-grammar-map.png" alt="Grammar map with explored and linked rules">
       </div>
     </a>
   </div>
