@@ -4,21 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#1c1d22">
-<title>French Grammar | Yurii Arnautov</title>
-<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="img/icon-512.png">
+<title>French Grammar Quest | Yurii Arnautov</title>
+<link rel="icon" type="image/png" sizes="32x32" href="img/french-favicon-32.png">
+<link rel="apple-touch-icon" href="img/french-apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/french-icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="img/french-icon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="stylesheet" href="styles.css">
 <style>
-.soon{min-height:calc(100dvh - 64px - 110px);display:flex;flex-direction:column;justify-content:center;padding-block:clamp(32px,6vw,72px);max-width:760px}
-.soon .glyph{font-size:48px;color:var(--accent);margin-bottom:24px}
-.soon h1{font-size:clamp(34px,5vw,52px);line-height:1.05;margin:16px 0 20px}
-.soon .lede{font-size:clamp(17px,1.6vw,19px);line-height:1.65;color:var(--text-2);max-width:60ch;margin-bottom:32px}
+/* The learning loop: four tabs in a row, collapses to two columns on mobile */
+.loop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:32px;max-width:960px}
+.step{background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--r-surface);padding:18px;display:grid;gap:10px;align-content:start}
+.step i{font-size:22px;color:var(--accent)}
+.step h3{font-size:15px}
+.step h3 span{display:block;font:500 12px/1.4 var(--mono);color:var(--text-3);margin-top:4px;letter-spacing:0}
+.step p{font-size:14px;line-height:1.55;color:var(--text-2)}
+@media (max-width:767px){.loop{grid-template-columns:1fr 1fr}}
+/* Map legend, colours taken from the app's dark theme */
+.legend{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:24px;font-size:14px;color:var(--text-2)}
+.legend span{display:inline-flex;align-items:center;gap:10px}
+.legend b{width:14px;height:14px;border-radius:50%;flex:none}
+.legend .explored{background:#ff5f9e}
+.legend .mastered{background:#ff5f9e;box-shadow:0 0 0 2px var(--bg),0 0 0 4px #4fdba0}
+.legend .ghost{border:1.5px dashed #ff5f9e}
+.legend .focus{background:#ff5f9e;box-shadow:0 0 0 3px var(--bg),0 0 0 5px #93c5fd}
+.legend .contrast{width:22px;height:3px;border-radius:2px;background:#fbbf24}
 </style>
 </head>
 <body>
@@ -27,20 +40,113 @@
   <a class="link" href="./index.html"><i class="ph ph-arrow-left"></i>All apps</a>
 </header>
 
-<main class="wrap">
-  <section class="soon">
-    <i class="ph ph-book-open-text glyph enter" style="--i:0" aria-hidden="true"></i>
-    <div class="enter" style="--i:0"><span class="pill">Coming soon</span></div>
-    <h1 class="enter" style="--i:1">French Grammar</h1>
-    <p class="lede enter" style="--i:2">An app for learning French grammar two ways at once: explore freely through the rules, or drill straight to your weak points. It grew out of a running study project, a grammar reference built up over months of B1-B2 work, and would turn that reference into something interactive instead of a document to scroll through.</p>
-    <div class="note enter" style="--i:3">
-      <i class="ph ph-compass-tool" aria-hidden="true"></i>
+<main>
+<section class="wrap hero">
+  <div>
+    <div class="hero-title enter" style="--i:0">
+      <img src="img/french-icon.png" alt="French Grammar Quest icon">
       <div>
-        <h2>In planning</h2>
-        <p>Details, screens, and a release date will land here as the app takes shape.</p>
+        <div class="kicker">Education</div>
+        <h1>French Grammar Quest</h1>
       </div>
     </div>
-  </section>
+    <p class="lede enter" style="--i:1">French grammar, one rule at a time. Understand a rule, practise it until it sticks, have Gemini write a text around it, and watch a map of what you've covered grow as you go.</p>
+    <div class="tags enter" style="--i:2">
+      <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Material 3</span><span class="tag">Navigation Compose</span><span class="tag">Room</span><span class="tag">Coroutines + Flow</span><span class="tag">Compose Canvas</span><span class="tag">Gemini API</span><span class="tag">Gemini TTS</span>
+    </div>
+  </div>
+  <div class="hero-shot enter" style="--i:2">
+    <img class="lighten" src="img/french-grammar-map.png" alt="Grammar map with the subjunctive in focus: explored rules as filled nodes, linked rules not opened yet as dashed ones" fetchpriority="high">
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">Why it exists</h2>
+  <div class="prose reveal">
+    <p>It grew out of a running study project: a grammar reference built up over months of B1–B2 work. As a document it did its job, but a document only gets scrolled. I wanted the reference to push back: show me how a rule is built, make me produce it, and remember which rules I've actually worked through.</p>
+    <p>The interface is in French on purpose, because reading the explanations in French is part of the practice. When an explanation doesn't land, an <strong>EN</strong> button in the top bar switches the interface and the rule explanations to English, and one more tap switches back. Every launch starts in French again.</p>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">One loop, four tabs</h2>
+  <div class="prose reveal">
+    <p>The first launch asks one question: start by understanding, or by practising? The answer decides which tab the app opens on, and it can be changed later in Settings. Everything else is one tap away in the bottom bar, and each tab keeps its place when you switch.</p>
+  </div>
+  <div class="loop">
+    <div class="step reveal"><i class="ph ph-lightbulb"></i><h3>Comprendre<span>Learn</span></h3><p>The rule, its structure, examples by register, and a text to listen to.</p></div>
+    <div class="step reveal" style="--i:1"><i class="ph ph-pencil-simple"></i><h3>S'entraîner<span>Practice</span></h3><p>Type the right form, or find the wrong word in a sentence.</p></div>
+    <div class="step reveal" style="--i:2"><i class="ph ph-sparkle"></i><h3>Créer<span>Create</span></h3><p>A fresh text or two-voice podcast built around the rule.</p></div>
+    <div class="step reveal" style="--i:3"><i class="ph ph-graph"></i><h3>Carte<span>Map</span></h3><p>Every rule you've covered, and the ones they lead to.</p></div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">What it does</h2>
+  <div class="features">
+    <div class="feature reveal">
+      <h3>A rule you can see</h3>
+      <p>Each rule opens on a short summary and its trigger phrase ("Il faut que" calls the subjunctive), plus the rule it's best learned against, like the passé composé next to the imparfait. Collapsible sections then break it down: a sentence formula where each block explains its role, a yes/no decision path, examples across four registers from familier to soutenu, and an annotated passage read aloud by the phone's French voice.</p>
+    </div>
+    <div class="feature reveal" style="--i:1">
+      <h3>Drills that are strict on French, not on typing</h3>
+      <p>The checker ignores what a learner shouldn't lose points for: capital letters, curly or straight apostrophes, extra spaces, a final full stop. Accents stay significant, since they're part of the spelling, but an answer that's only wrong on accents gets its own "check the accents" message. Accent keys insert at the cursor, and autocorrect stays off so the keyboard can't "fix" a conjugation.</p>
+    </div>
+    <div class="feature reveal">
+      <h3>A session that ends somewhere useful</h3>
+      <p>The summary lists every mistake next to the expected answer, with a button that replays only the missed items. From there it's one tap to start over, reread the rule, or move on to the next one. The best score for each rule is kept, and 70% or more marks the rule as mastered on the map.</p>
+    </div>
+    <div class="feature reveal" style="--i:1">
+      <h3>Texts written around a rule</h3>
+      <p>Pick a rule, a CEFR level and a theme, and Gemini writes about a page of French that uses the rule naturally, followed by notes on where it appears. The podcast format writes a two-voice dialogue instead, which Gemini's text-to-speech turns into audio with two distinct voices, ready to save to Downloads. Results can be listened to, saved, copied, shared or regenerated.</p>
+    </div>
+    <div class="feature reveal">
+      <h3>Your own API key</h3>
+      <p>As in FitApp, nothing is baked into the build. The Gemini key is pasted once in Settings, stays on the device, and only goes to Google's own endpoint. Without a key, the Create tab says so and points to Settings instead of failing on the first try.</p>
+    </div>
+    <div class="feature reveal" style="--i:1">
+      <h3>Nothing lost on a tab switch</h3>
+      <p>The drill session, the selected rules, the level filter and the Create form all live in the ViewModel, so rotating the phone or checking the map mid-exercise doesn't reset anything. The last rule and drill type also survive a restart.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">The grammar map</h2>
+  <div class="prose reveal">
+    <p>The map borrows its idea from WikiLinks: every rule you open lands on the map, and the rules it links to appear around it as dashed nodes you haven't opened yet. Following those links is one way to explore; the <strong>+</strong> button is the other. It opens any rule, including ones no link leads to, lists the rules not on the map first, and suggests a few at your current level.</p>
+    <p>It started as a web prototype drawn with d3. For the app, I drew it natively on a Compose <code>Canvas</code> instead of embedding that page in a WebView: no bundled JavaScript to keep working offline, no bridge carrying the app's state between two worlds, and one theme and language system instead of two. The layout is a small force-directed simulation in Kotlin that runs off the main thread, and node positions are saved so the map keeps its shape between visits. Pinch to zoom, tap a node for its details, and long-press to drag it somewhere else.</p>
+  </div>
+  <div class="legend reveal">
+    <span><b class="explored"></b>Explored</span>
+    <span><b class="mastered"></b>Mastered</span>
+    <span><b class="ghost"></b>Linked, not opened yet</span>
+    <span><b class="focus"></b>Current focus</span>
+    <span><b class="contrast"></b>Contrast pair</span>
+  </div>
+  <div class="rows" style="margin-top:32px">
+    <div class="r reveal"><h3>Where the links come from</h3><p>Cross-references carried over from the prototype's lesson data, the contrast pairs each rule already declares, and a chain through the explored rules of each family. Unopened rules from the same family appear only around the rule in focus, six at most, so a large family doesn't turn the map into a hairball.</p></div>
+    <div class="r reveal"><h3>What the canvas costs</h3><p>A drawn map is invisible to TalkBack, so the Map tab has a List view with the same rules as a searchable index, and the canvas itself announces how many rules are explored and how many are left. Long titles are shortened to the part before the colon, and a label that would overlap another stays hidden until you zoom in.</p></div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">From an AI Studio prototype to a real app</h2>
+  <div class="prose reveal">
+    <p>The first version came out of Google AI Studio: a working Compose app, but with several rounds of ideas stacked on top of each other. A quest map, quizzes with hearts and XP, a timed speed drill and a mistakes screen were all still in the code, yet none of them could be reached from the interface anymore. The rework removed close to 4,000 lines of them, and the four database tables behind them went through an explicit Room migration, so saved progress and creations survive the update.</p>
+    <p>The rest was about making the app predictable: one navigation graph with a proper back stack, state that lives in the ViewModel instead of in individual screens, the same rule picker on every tab, and every string moved into French and English resource files. It joins Show Tracker and the Subscription Tracker rebuild as the third app written natively in Kotlin.</p>
+  </div>
+</section>
+
+<section class="wrap section">
+  <div class="note reveal">
+    <i class="ph ph-wrench" aria-hidden="true"></i>
+    <div>
+      <h2>Not wired in yet</h2>
+      <p>The app holds 47 rules, while the reference it grew from covers more than a hundred lessons, so many map nodes still have few links. Decision steps, tables and register notes are French only, so the EN switch leaves those parts as they are. There's no spaced repetition yet to bring a rule back when it's due. Screens from a phone will land here with the first installed build.</p>
+    </div>
+  </div>
+</section>
 </main>
 
 <nav class="wrap pager" aria-label="More apps">
