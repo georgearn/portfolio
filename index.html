@@ -46,16 +46,17 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
 .c-subs .shots{--n:4}
 .c-fit{grid-column:span 2}
 .c-fit .shots{--n:1;width:62%;margin-left:auto;margin-right:auto}
-.c-fit .shots .alt{display:none}
-.c-show{grid-column:span 3}
-.c-show .shots{--n:3}
-.c-fr{grid-column:span 3}
-.c-fr .shots{--n:3}
+.c-fit .shots .alt,.c-show .shots .alt{display:none}
+.c-show{grid-column:span 2}
+.c-show .shots{--n:1;width:62%;margin-left:auto;margin-right:auto}
+.c-fr{grid-column:span 4}
+.c-fr .shots{--n:4}
 @media (max-width:1023px){
   .c-subs,.c-fit,.c-show,.c-fr{grid-column:span 3}
   .c-subs .shots{--n:2}
   .c-subs .shots img:nth-child(n+3),.c-show .shots img:nth-child(n+3),.c-fr .shots img:nth-child(n+3){display:none}
-  .c-show .shots{--n:2}
+  .c-show .shots{width:100%;--n:2}
+  .c-show .shots .alt{display:block}
   .c-fit .shots{width:100%;--n:2}
   .c-fit .shots .alt{display:block}
   .c-fr .shots{--n:2}
@@ -124,8 +125,7 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
       <p>Movies and series tracked together, with release alerts and a picker for when you can't decide.</p>
       <div class="shots">
         <img loading="lazy" src="img/showtracker-watchlist.png" alt="My Watchlist screen">
-        <img loading="lazy" src="img/showtracker-foryou.png" alt="For You screen">
-        <img loading="lazy" src="img/showtracker-discover.png" alt="Discover search">
+        <img loading="lazy" class="alt" src="img/showtracker-foryou.png" alt="For You screen">
       </div>
     </a>
     <a class="cell c-fr reveal" style="--i:1" href="./french.html">
@@ -135,6 +135,7 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
       <div class="shots">
         <img loading="lazy" src="img/french-learn.png" alt="Comprendre rule screen">
         <img loading="lazy" src="img/french-practice.png" alt="Practice drill">
+        <img loading="lazy" src="img/french-create.png" alt="Create a text or podcast">
         <img loading="lazy" src="img/french-grammar-map.png" alt="Grammar map with explored and linked rules">
       </div>
     </a>
