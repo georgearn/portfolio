@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="stylesheet" href="styles.css">
 <style>
-/* CI pipeline: four steps in a row, collapses to a column on mobile */
+/* Build flow: four steps in a row, collapses to two columns on mobile */
 .pipeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:32px;max-width:960px}
 .step{background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--r-surface);padding:18px;display:grid;gap:10px;align-content:start}
 .step i{font-size:22px;color:var(--accent)}
@@ -40,34 +40,34 @@
         <h1>Show Tracker</h1>
       </div>
     </div>
-    <p class="lede enter" style="--i:1">One list for movies and series: what's releasing soon, what just dropped, and a quick picker for when I can't decide.</p>
+    <p class="lede enter" style="--i:1">One list for movies and series: what's releasing soon, what just dropped, alerts on release day and when a new season is dated, and a quick picker for when I can't decide.</p>
     <div class="tags enter" style="--i:2">
-      <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Material 3</span><span class="tag">Room</span><span class="tag">Hilt</span><span class="tag">Retrofit + Moshi</span><span class="tag">WorkManager</span><span class="tag">TMDB</span><span class="tag">OMDb</span>
+      <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Material 3</span><span class="tag">Room</span><span class="tag">Hilt</span><span class="tag">Retrofit + Moshi</span><span class="tag">WorkManager</span><span class="tag">DataStore</span><span class="tag">Coil</span><span class="tag">TMDB</span><span class="tag">OMDb</span>
     </div>
   </div>
   <div class="hero-shot enter" style="--i:2">
-    <img class="lighten" src="img/showtracker-home.png" alt="Show Tracker home screen with Releasing Soon and Just Dropped rails" fetchpriority="high">
+    <img class="lighten" src="img/showtracker-home.png" alt="Show Tracker home screen with New Releases and Upcoming tabs" fetchpriority="high">
   </div>
 </section>
 
 <section class="wrap section">
   <h2 class="h2 reveal">Why it exists</h2>
   <div class="prose reveal">
-    <p>The idea is simple: I wanted one overview of what's coming and what just landed, a way to set a reminder for a specific title instead of hoping I'd remember it, and a search that lets me add anything, movie or series, to a single watchlist. From there, a quick picker takes the decision fatigue off my hands: give it a mood, a runtime window, a genre or two, and it either draws from what's already on the list or hands back something fully random.</p>
-    <p>Metadata comes from two APIs stitched together: TMDB for search, trending titles, synopses, cast, posters, and region-aware "where to watch" data, and OMDb, queried by IMDb ID, for the IMDb rating and Rotten Tomatoes score TMDB doesn't carry itself. Neither IMDb nor Rotten Tomatoes exposes a public API of their own, so this pairing is the practical ceiling on what a hobby project can pull in without scraping.</p>
+    <p>The idea is simple: I wanted one overview of what's coming and what just landed, a way to set a reminder for a specific title instead of hoping I'd remember it, and a search that lets me add anything, movie or series, to a single watchlist. Series needed one more thing: a heads-up when a show I follow gets its next season, not only when it first premiered. From there, a quick picker takes the decision fatigue off my hands: give it a mood, a runtime window, a genre or two, and it draws from what's already on the list, or hands back a random pick.</p>
+    <p>Metadata comes from two APIs stitched together: TMDB for search, trending titles, synopses, cast, posters, trailers, recommendations, season schedules and region-aware "where to watch" data, and OMDb, queried by IMDb ID, for the IMDb rating and Rotten Tomatoes score TMDB doesn't carry itself. Neither IMDb nor Rotten Tomatoes exposes a public API of their own, so this pairing is the practical ceiling on what a hobby project can pull in without scraping.</p>
   </div>
 </section>
 
 <section class="wrap section">
-  <h2 class="h2 reveal">Built entirely in the cloud</h2>
+  <h2 class="h2 reveal">From cloud builds to local builds</h2>
   <div class="prose reveal">
-    <p>FitApp and Subscription Tracker both began in Python. Show Tracker skipped that step and went straight to native Kotlin and Jetpack Compose, since the toolchain from the Subscription Tracker rebuild was already familiar. There's no Android Studio, no local Gradle, no offline machine involved. Every commit goes to GitHub, and GitHub Actions does the rest.</p>
+    <p>FitApp and Subscription Tracker both began in Python. Show Tracker skipped that step and went straight to native Kotlin and Jetpack Compose, since the toolchain from the Subscription Tracker rebuild was already familiar. It started fully in the cloud, with a GitHub Actions workflow building the APK on every push. After the move to Gradle 9.7 and Android Gradle Plugin 9.4, that workflow was retired: changes still arrive through pull requests on GitHub, and the APK is now built on my own machine.</p>
   </div>
   <div class="pipeline">
-    <div class="step reveal"><i class="ph ph-git-commit"></i><h3>Push to main</h3><p>A small workflow under <code>.github/workflows/</code> triggers on every push.</p></div>
-    <div class="step reveal" style="--i:1"><i class="ph ph-coffee"></i><h3>Set up JDK</h3><p><code>actions/setup-java</code>, then the Gradle cache is restored.</p></div>
-    <div class="step reveal" style="--i:2"><i class="ph ph-hammer"></i><h3>Build</h3><p><code>./gradlew assembleDebug</code> runs on GitHub's own runner.</p></div>
-    <div class="step reveal" style="--i:3"><i class="ph ph-download-simple"></i><h3>Download APK</h3><p><code>actions/upload-artifact</code> attaches it to the run. Unzip, install.</p></div>
+    <div class="step reveal"><i class="ph ph-git-branch"></i><h3>Work on a branch</h3><p>Every change is written on a feature branch, never straight on <code>main</code>.</p></div>
+    <div class="step reveal" style="--i:1"><i class="ph ph-git-pull-request"></i><h3>Merge the PR</h3><p>The branch lands on <code>main</code> through a pull request on GitHub.</p></div>
+    <div class="step reveal" style="--i:2"><i class="ph ph-hammer"></i><h3>Build locally</h3><p><code>gradlew assembleDebug</code> with Gradle 9.7.1, AGP 9.4.1 and JDK 17.</p></div>
+    <div class="step reveal" style="--i:3"><i class="ph ph-device-mobile"></i><h3>Install</h3><p>The APK goes straight onto the phone. Release builds are signed with a local keystore.</p></div>
   </div>
 </section>
 
@@ -75,28 +75,40 @@
   <h2 class="h2 reveal">What it does</h2>
   <div class="features">
     <div class="feature reveal">
-      <h3>Releasing Soon and Just Dropped</h3>
-      <p>Home surfaces two rails: upcoming titles with a bell to arm a notification, and what's newly out with a one-tap add to the watchlist. Both are filtered by preferred genres and country when those are set.</p>
+      <h3>New Releases and Upcoming</h3>
+      <p>Home has two swipeable tabs: what came out in the last 30 days, with a one-tap add, and an upcoming timeline grouped into Today, This Week, Next Week and beyond, with a bell on each title. Pull down to refresh. "See all" opens full grids: Just Dropped with IMDb and Rotten Tomatoes scores and type and genre filters, and Releasing Soon split into the next two weeks, month, three months and later.</p>
     </div>
     <div class="feature reveal" style="--i:1">
-      <h3>Search and a single watchlist</h3>
-      <p>Discover searches movies and series together against TMDB. Anything found goes onto one list, which doubles as a simple watch log: checked off once seen, deleted once done.</p>
+      <h3>Discover and one watchlist</h3>
+      <p>Discover opens on what's trending this week and searches movies and series together. Anything goes onto one list with a single tap, and every add or remove comes with an Undo.</p>
+    </div>
+    <div class="feature reveal">
+      <h3>A detail page worth opening</h3>
+      <p>Backdrop, poster, runtime or season count, genres, IMDb, Rotten Tomatoes and TMDB scores, the trailer, cast, and where to watch in your region, split into stream, rent and buy. "More like this" leads to related titles, and share sends a link.</p>
+    </div>
+    <div class="feature reveal" style="--i:1">
+      <h3>A list that sorts itself</h3>
+      <p>The watchlist splits into Ready to watch, Waiting on release (undated titles included) and a History of what's been seen. It can be grouped by type, or by type and genre. Swipe left to remove, swipe right to mark as watched.</p>
     </div>
     <div class="feature reveal">
       <h3>A quick picker for indecision</h3>
-      <p>For You runs a short quiz (mood, movie or series, runtime, genres), then pulls a match from the watchlist. Surprise Me ignores all of it for a fully random pick.</p>
+      <p>For You runs a short quiz (mood, movie or series, runtime, genres) and builds a stack of matches from the watchlist. "Drop Random Pick" skips the quiz. Swipe a card right to keep it or left to skip it, or tap it to open the details.</p>
     </div>
     <div class="feature reveal" style="--i:1">
-      <h3>Release-day notifications</h3>
-      <p>No local alarms. A WorkManager job re-checks TMDB for every upcoming title on the watchlist roughly twice a day, and fires a notification the moment its status flips to released.</p>
+      <h3>Release-day alerts</h3>
+      <p>No local alarms. A WorkManager job re-checks TMDB roughly twice a day for every title with its bell on, and notifies the moment it's out. These checks bypass the HTTP cache, so a date change shows up the same day. The notification permission is asked for the first time a bell is tapped, not at launch.</p>
     </div>
     <div class="feature reveal">
-      <h3>Genre, region and content filters</h3>
-      <p>Preferred genres filter Home and Just Dropped. A region code decides which streaming services show under "where to watch," and per-country filters hide titles you'd rather not see, with exceptions.</p>
+      <h3>New-season alerts</h3>
+      <p>Series that are still running can be followed from their detail page. The same background job sends one alert when TMDB dates the next season, and one when it airs. The list shows a chip like "S3 · Mar 12", and the Notifications screen collects new seasons, fresh releases and what's coming up.</p>
     </div>
     <div class="feature reveal" style="--i:1">
+      <h3>Genre, region and content filters</h3>
+      <p>Preferred genres filter Home and Just Dropped. A region code decides which streaming services show under "where to watch", and per-country filters hide titles you'd rather not see, with exceptions. A lookahead setting controls how far ahead Releasing Soon reaches.</p>
+    </div>
+    <div class="feature reveal">
       <h3>Where TMDB and OMDb fall short</h3>
-      <p>Both APIs are rate-limited and occasionally miss a title, especially smaller or very recent releases. OMDb's ratings depend on TMDB having a matching IMDb ID, so some titles show ratings as unavailable rather than wrong.</p>
+      <p>Both APIs are rate-limited and occasionally miss a title, especially smaller or very recent releases. OMDb's ratings depend on TMDB having a matching IMDb ID, so some titles show ratings as unavailable rather than wrong. Season alerts are only as early as TMDB's data: big shows are usually dated weeks ahead, niche ones sometimes only days before, and dates follow the original network, not your streaming service.</p>
     </div>
   </div>
 </section>
@@ -106,7 +118,7 @@
     <i class="ph ph-wrench" aria-hidden="true"></i>
     <div>
       <h2>Not wired in yet</h2>
-      <p>Notifications track a title as a whole, not a season. A series already marked released doesn't get a second alert when a new season lands. Doing that properly means tracking season-level release dates per series, which is the next piece to design in rather than bolt on.</p>
+      <p>The layout is phone-first: tablets and foldables get a wider grid, but no navigation rail or two-pane view. Discover doesn't remember recent searches, and "More like this" is TMDB's own list, so it ignores the genre and country filters.</p>
     </div>
   </div>
 </section>
@@ -114,12 +126,13 @@
 <section class="wrap section">
   <h2 class="h2 reveal">Screens</h2>
   <div class="screens reveal">
-    <figure><img class="lighten" loading="lazy" src="img/showtracker-home.png" alt="Home screen with Releasing Soon and Just Dropped rails"><figcaption>Home: releasing soon, just dropped</figcaption></figure>
-    <figure><img class="lighten" loading="lazy" src="img/showtracker-notifications.png" alt="Notifications screen listing armed release reminders"><figcaption>Armed release notifications</figcaption></figure>
-    <figure><img class="lighten" loading="lazy" src="img/showtracker-discover.png" alt="Discover search screen"><figcaption>Discover: search movies and series</figcaption></figure>
-    <figure><img class="lighten" loading="lazy" src="img/showtracker-watchlist.png" alt="My Watchlist screen"><figcaption>My Watchlist</figcaption></figure>
-    <figure><img class="lighten" loading="lazy" src="img/showtracker-foryou-quiz.png" alt="For You quiz with mood, length and genre filters"><figcaption>For You: mood, length, genre</figcaption></figure>
-    <figure><img class="lighten" loading="lazy" src="img/showtracker-foryou-picks.png" alt="For You screen with Get My Picks and Surprise Me buttons"><figcaption>For You: get picks or go random</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/showtracker-home.png" alt="Home screen with New Releases and Upcoming tabs"><figcaption>Home: new releases and upcoming</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/showtracker-details.png" alt="Detail screen with scores, watchlist button and new season alerts"><figcaption>Details: scores, trailer, season alerts</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/showtracker-discover.png" alt="Discover screen showing trending titles"><figcaption>Discover: trending and search</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/showtracker-watchlist.png" alt="My Watchlist screen with List and History tabs"><figcaption>My Watchlist</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/showtracker-notifications.png" alt="Notifications screen with new seasons, out now and coming up"><figcaption>Notifications: seasons and releases</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/showtracker-foryou-quiz.png" alt="For You quiz with mood, length and genre questions"><figcaption>For You: the quiz</figcaption></figure>
+    <figure><img class="lighten" loading="lazy" src="img/showtracker-foryou-picks.png" alt="For You swipe card with keep and skip buttons"><figcaption>For You: swipe to keep or skip</figcaption></figure>
     <figure><img class="lighten" loading="lazy" src="img/showtracker-settings-genres.png" alt="Settings screen with region and preferred genres"><figcaption>Settings: region and genres</figcaption></figure>
     <figure><img class="lighten" loading="lazy" src="img/showtracker-settings-filters.png" alt="Settings screen with release lookahead and content filters"><figcaption>Settings: lookahead and content filters</figcaption></figure>
   </div>
