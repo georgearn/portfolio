@@ -34,7 +34,7 @@
         <h1>GPulse</h1>
       </div>
     </div>
-    <p class="lede enter" style="--i:1">A read-only Android dashboard for the data Garmin Connect holds about your watch. It reads your account through Garmin's Personal API, so it needs no Bluetooth link to the watch.</p>
+    <p class="lede enter" style="--i:1">A better look at my Garmin workouts and stats. A read-only dashboard that keeps the original's design language, modernized, and reads my account through Garmin's Personal API.</p>
     <div class="tags enter" style="--i:2">
       <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Material 3</span><span class="tag">Hilt</span><span class="tag">Garmin Personal API</span><span class="tag">Multi-module</span>
     </div>
@@ -44,8 +44,8 @@
 <section class="wrap section">
   <h2 class="h2 reveal">Why it exists</h2>
   <div class="prose reveal">
-    <p>Garmin Connect holds all of my watch data, but I wanted it laid out my way: a Home I can rearrange, a calendar, and a reading of each workout. GPulse is that: a companion dashboard for my own data. It is an independent project, not made or endorsed by Garmin.</p>
-    <p>It is built purely on Garmin's Personal API. The watch syncs to Garmin Connect as usual and GPulse shows what is there, so there is no Bluetooth link to the watch at all. The cost is freshness: the numbers are only as current as the watch's last sync, and the app cannot ask the watch to sync.</p>
+    <p>Garmin Connect has my data, but I don't like working in it. Setting it up and finding the one metric I need is a quest. GPulse is the same data with a clearer layout and better stats of my workouts. I kept the original's design language and modernized it. It is an independent project, not made or endorsed by Garmin.</p>
+    <p>Some of the original's numbers also don't match reality. Its fitness age depends on BMI, and it points at an ideal BMI I will never reach. And to read its running stats I had to flip between a page explaining what each stat means and the page with my actual numbers. GPulse fixes both.</p>
   </div>
 </section>
 
@@ -54,19 +54,19 @@
   <div class="features">
     <div class="feature reveal">
       <h3>A Home you arrange</h3>
-      <p>A hero card with the day's step ring, floors, calories and switchable 14-day charts, tiles for each health feature, the week's workouts and recent workouts. Blocks can be reordered or hidden.</p>
+      <p>A hero card with the day's step ring, floors, calories and switchable 14-day charts, tiles for each health feature, the week's workouts and recent workouts. Blocks can be reordered or hidden, so the metrics I need are on the first screen.</p>
     </div>
     <div class="feature reveal" style="--i:1">
-      <h3>Health, day by day</h3>
-      <p>Steps and activity, sleep, heart rate, stress, breathing, HRV, weight, hydration, nutrition and fitness age, each with a day-by-day chart and detail. Only the data types your account returns get a screen.</p>
+      <h3>Workouts, read in place</h3>
+      <p>Records, per-workout figures, heart-rate zones and running dynamics. Each stat carries a good, OK or needs-work reading right beside it, so there is no switching to a separate page to learn what it means.</p>
     </div>
     <div class="feature reveal">
-      <h3>Workouts, read for you</h3>
-      <p>Records, per-workout figures, heart-rate zones and running dynamics, with a good, OK or needs-work reading of each stat.</p>
+      <h3>A fitness age you can move</h3>
+      <p>The original ties fitness age to a BMI target that was never realistic for me. GPulse adds granular steps: whole BMI points below today, the body weight each step means, and the estimated gain, so progress is something I can actually reach.</p>
     </div>
     <div class="feature reveal" style="--i:1">
-      <h3>Calendar and looks</h3>
-      <p>A month view by steps, workouts or stress. Three palettes (GConnect, Pulse and Material You), light and dark, metric or imperial. Everything fetched can be saved as a zip and loaded back.</p>
+      <h3>Health, calendar, looks</h3>
+      <p>Sleep, heart rate, stress, breathing, HRV, weight and more, each with a day-by-day chart, and only for data your account returns. A month calendar by steps, workouts or stress. Three palettes (GConnect, Pulse, Material You), light and dark, metric or imperial.</p>
     </div>
   </div>
 </section>
@@ -74,6 +74,7 @@
 <section class="wrap section">
   <h2 class="h2 reveal">How it is built</h2>
   <div class="rows">
+    <div class="r reveal"><h3>Not a direct line</h3><p>GPulse does not talk to the watch. The data goes watch, Garmin Connect, Garmin's servers, Personal API, and only then reaches the app, so it is as current as the watch's last sync. The API is also not that detailed, but it does the job.</p></div>
     <div class="r reveal"><h3>Setup with a key</h3><p>You create a Personal API key in Garmin Connect and paste it into the app. The key is stored encrypted with a key from the Android Keystore, and the short-lived bearer token Garmin issues for it is requested again when needed. Garmin does not report the key's expiry, so the app stores the day itself and reminds you 14 days, 3 days and one day before it stops working.</p></div>
     <div class="r reveal"><h3>Refreshing</h3><p>Data refreshes when the app opens (if the last fetch is over 3 minutes old), in the background about every 6 hours with WorkManager, and on demand. Each refresh fetches only what changed, with a few days of overlap, and up to a year on the first run.</p></div>
     <div class="r reveal"><h3>Raw responses, parsed on read</h3><p>Garmin's responses are stored as they came, one file per data set, and parsed when read, so a parser fix needs no new download. Parsers are checked against saved sample responses in a plain JVM module with unit tests.</p></div>
