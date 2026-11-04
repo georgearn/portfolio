@@ -53,11 +53,13 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
 .c-fr{grid-column:span 4}
 .c-fr .shots{--n:4}
 .c-gp{grid-column:span 6}
+.c-gp .shots{--n:4;width:66%;margin-left:auto;margin-right:auto}
 @media (max-width:1023px){
   .c-subs,.c-fit,.c-show,.c-fr{grid-column:span 3}
   .c-gp{grid-column:span 6}
+  .c-gp .shots{--n:2;width:100%}
   .c-subs .shots{--n:2}
-  .c-subs .shots img:nth-child(n+3),.c-show .shots img:nth-child(n+3),.c-fr .shots img:nth-child(n+3){display:none}
+  .c-subs .shots img:nth-child(n+3),.c-show .shots img:nth-child(n+3),.c-fr .shots img:nth-child(n+3),.c-gp .shots img:nth-child(n+3){display:none}
   .c-show .shots{width:100%;--n:2}
   .c-show .shots .alt{display:block}
   .c-fit .shots{width:100%;--n:2}
@@ -71,7 +73,7 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
   .c-subs,.c-fit,.c-show,.c-fr,.c-gp{grid-column:auto}
   .cell{padding:22px}
   .cell .go{top:22px;right:22px}
-  .cell .shots,.c-subs .shots,.c-show .shots,.c-fr .shots{--n:2;margin-bottom:-90px}
+  .cell .shots,.c-subs .shots,.c-show .shots,.c-fr .shots,.c-gp .shots{--n:2;margin-bottom:-90px}
 }
 .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-block:32px 40px;border-top:1px solid var(--line);font-size:14px;color:var(--text-3)}
 </style>
@@ -146,6 +148,12 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
       <i class="ph ph-arrow-up-right go" aria-hidden="true"></i>
       <div class="top"><img src="img/gpulse-icon.png" alt=""><div><h3>GPulse</h3><div class="cat">Health &amp; fitness</div></div></div>
       <p>Better visuals and stats for my Garmin workouts, built on Garmin's Personal API: a Home I arrange, and every stat read in place.</p>
+      <div class="shots">
+        <img loading="lazy" src="img/gpulse-home.png" alt="Home with step ring and 14-day chart (sample data)">
+        <img loading="lazy" src="img/gpulse-cal.png" alt="Calendar colored by steps (sample data)">
+        <img loading="lazy" src="img/gpulse-health.png" alt="Health tab with trend lines (sample data)">
+        <img loading="lazy" src="img/gpulse-set.png" alt="Settings with theme and palette choices">
+      </div>
     </a>
   </div>
 </section>
