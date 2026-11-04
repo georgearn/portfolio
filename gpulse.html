@@ -74,12 +74,11 @@
 <section class="wrap section">
   <h2 class="h2 reveal">How it is built</h2>
   <div class="rows">
-    <div class="r reveal"><h3>Not a direct line</h3><p>GPulse does not talk to the watch. The data goes watch, Garmin Connect, Garmin's servers, Personal API, and only then reaches the app, so it is as current as the watch's last sync. The API is also not that detailed, but it does the job.</p></div>
+    <div class="r reveal"><h3>Not a direct line</h3><p>GPulse does not talk to the watch. The data goes watch, Garmin Connect, Garmin's servers, Personal API, and only then reaches the app, so it is as current as the watch's last sync. The API is also not that detailed (no GPS track, so no workout map, and some data types come back empty), but it does the job.</p></div>
     <div class="r reveal"><h3>Setup with a key</h3><p>You create a Personal API key in Garmin Connect and paste it into the app. The key is stored encrypted with a key from the Android Keystore, and the short-lived bearer token Garmin issues for it is requested again when needed. Garmin does not report the key's expiry, so the app stores the day itself and reminds you 14 days, 3 days and one day before it stops working.</p></div>
     <div class="r reveal"><h3>Refreshing</h3><p>Data refreshes when the app opens (if the last fetch is over 3 minutes old), in the background about every 6 hours with WorkManager, and on demand. Each refresh fetches only what changed, with a few days of overlap, and up to a year on the first run.</p></div>
     <div class="r reveal"><h3>Raw responses, parsed on read</h3><p>Garmin's responses are stored as they came, one file per data set, and parsed when read, so a parser fix needs no new download. Parsers are checked against saved sample responses in a plain JVM module with unit tests.</p></div>
     <div class="r reveal"><h3>Modules</h3><p>A multi-module Kotlin project: <code>:core:garmin</code> holds the API client and parsers, <code>:core:data</code> the encrypted key store, cache and refresh logic, <code>:core:designsystem</code> the themes and charts, and each screen area is its own feature module. Features never depend on each other.</p></div>
-    <div class="r reveal"><h3>What is not done</h3><p>What the Personal API returns varies by account: sleep, HRV, hydration and food logs came back empty for mine, so those parsers follow Garmin's documented fields and have not seen data. Activities carry no GPS track, so workouts show no map. The API is read-only, so nothing is pushed to the watch, and translations beyond English are not done.</p></div>
   </div>
 </section>
 </main>
