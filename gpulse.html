@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>if(/^https?:$/.test(location.protocol)&&/\.html$/.test(location.pathname))history.replaceState(null,"",location.pathname.replace(/(index)?\.html$/,"")+location.search+location.hash)</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c1d22">
+<title>GPulse | Yurii Arnautov</title>
+<meta name="description" content="GPulse: an Android app that talks to a Garmin Venu 4 directly over Bluetooth, with no Garmin sign-in and no dummy data.">
+<link rel="icon" type="image/png" sizes="32x32" href="img/gpulse-favicon-32.png">
+<link rel="apple-touch-icon" href="img/gpulse-apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/gpulse-icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="img/gpulse-icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="styles.css">
+<style>.hero.solo{grid-template-columns:1fr}.hero.solo .lede{max-width:56ch}</style>
+</head>
+<body>
+
+<header class="wrap nav">
+  <a class="link" href="/"><i class="ph ph-arrow-left"></i>All apps</a>
+</header>
+
+<main>
+<section class="wrap hero solo">
+  <div>
+    <div class="hero-title enter" style="--i:0">
+      <img src="img/gpulse-icon.png" alt="GPulse icon">
+      <div>
+        <div class="kicker">Health &amp; fitness</div>
+        <h1>GPulse</h1>
+      </div>
+    </div>
+    <p class="lede enter" style="--i:1">An Android app that replaces Garmin Connect for a Garmin Venu 4. It talks to the watch directly over Bluetooth, needs no Garmin sign-in, and shows only real data.</p>
+    <div class="tags enter" style="--i:2">
+      <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Material 3</span><span class="tag">Hilt</span><span class="tag">BLE</span><span class="tag">Multi-module</span>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">Why it exists</h2>
+  <div class="prose reveal">
+    <p>The watch already records everything. I wanted to read it straight from the watch, without an account in between and without a server holding my data. So GPulse has no sign-in, no sleep tracking, no dummy data and no estimated numbers: every figure comes from the watch's own files and messages, or from my own exports.</p>
+    <p>Nothing about the watch side is guessed. The original Garmin Connect app is the reference: its decompiled code and Bluetooth captures show how it talks to the watch, and GPulse follows that behavior. Each feature was read from the original first, and no permission is requested without a feature behind it.</p>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">What it does</h2>
+  <div class="features">
+    <div class="feature reveal">
+      <h3>Sync straight from the watch</h3>
+      <p>Downloads the activity, monitoring and metrics files over the Garmin multi-link protocol, keeps the raw FIT files on the phone, and archives them on the watch so its storage frees up.</p>
+    </div>
+    <div class="feature reveal" style="--i:1">
+      <h3>An always-on link</h3>
+      <p>A foreground service holds one connection to the watch. The watch is registered as a companion device, as the original does, so Android restarts the app when the watch connects, even after a force stop.</p>
+    </div>
+    <div class="feature reveal">
+      <h3>Today, calendar, workouts, trends</h3>
+      <p>A daily screen with movement rings and tiles you choose and reorder, a month calendar, workouts with maps and heart rate, a performance tab (VO2 max, fitness age, race predictions), and trends for steps, heart rate, stress, body battery, respiration, pulse ox, calories, floors and weight.</p>
+    </div>
+    <div class="feature reveal" style="--i:1">
+      <h3>The phone, for the watch</h3>
+      <p>Notifications with replies, calls answered or declined from the watch, calendar, weather and GPS satellite data through the watch's web relay, music control, find my phone, text replies, and the phone's position, time and time zone.</p>
+    </div>
+    <div class="feature reveal">
+      <h3>The watch's own settings menu</h3>
+      <p>The same menu as on the watch, read and changed live from the phone, including reorderable lists and the list of sports the watch offers.</p>
+    </div>
+    <div class="feature reveal" style="--i:1">
+      <h3>Real data only</h3>
+      <p>Steps, heart rate, stress, body battery and activity details are parsed from the FIT files. Activity fields were matched against a Garmin export across 13 runs before being used. History from an export fills the days the watch no longer holds.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">How it is built</h2>
+  <div class="rows">
+    <div class="r reveal"><h3>Modules</h3><p>A multi-module Kotlin project: <code>:app</code> for navigation and services, <code>:core:watch</code> for everything about the watch (BLE transport, protocol, FIT parsing), <code>:core:data</code> for repositories, <code>:core:designsystem</code> for the Material 3 theme and charts, and one module per area of the UI. Features never depend on each other.</p></div>
+    <div class="r reveal"><h3>The protocol</h3><p>Multi-link BLE with COBS framing and CRC16, a full handshake, and reconnection rules copied from the original. Every write of one message is atomic, because two replies sent at once interleaved their pieces and the watch rejected them.</p></div>
+    <div class="r reveal"><h3>What is not done</h3><p>Anything that needs Garmin's servers (uploading files to Garmin, Garmin Pay, the Connect IQ store, training readiness, HRV and sleep), and part of the watch's file service. Reading the watch's device description is still unfinished: the transfer starts, then stalls.</p></div>
+  </div>
+</section>
+</main>
+
+<nav class="wrap pager" aria-label="More apps">
+  <a href="/french"><span>Previous</span>French Grammar Quest</a>
+  <a class="next" href="/"><span>Back to</span>All apps</a>
+</nav>
+
+<script src="gallery.js"></script>
+</body>
+</html>

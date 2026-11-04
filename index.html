@@ -52,8 +52,10 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
 .c-show .shots{--n:1;width:62%;margin-left:auto;margin-right:auto}
 .c-fr{grid-column:span 4}
 .c-fr .shots{--n:4}
+.c-gp{grid-column:span 6}
 @media (max-width:1023px){
   .c-subs,.c-fit,.c-show,.c-fr{grid-column:span 3}
+  .c-gp{grid-column:span 6}
   .c-subs .shots{--n:2}
   .c-subs .shots img:nth-child(n+3),.c-show .shots img:nth-child(n+3),.c-fr .shots img:nth-child(n+3){display:none}
   .c-show .shots{width:100%;--n:2}
@@ -66,7 +68,7 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
   .home-hero{grid-template-columns:1fr;min-height:0;padding-top:16px}
   .fan{justify-self:center;max-width:360px}
   .bento{grid-template-columns:1fr}
-  .c-subs,.c-fit,.c-show,.c-fr{grid-column:auto}
+  .c-subs,.c-fit,.c-show,.c-fr,.c-gp{grid-column:auto}
   .cell{padding:22px}
   .cell .go{top:22px;right:22px}
   .cell .shots,.c-subs .shots,.c-show .shots,.c-fr .shots{--n:2;margin-bottom:-90px}
@@ -139,6 +141,11 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
         <img loading="lazy" src="img/french-create.png" alt="Create a text or podcast">
         <img loading="lazy" src="img/french-grammar-map.png" alt="Grammar map with explored and linked rules">
       </div>
+    </a>
+    <a class="cell c-gp reveal" href="/gpulse">
+      <i class="ph ph-arrow-up-right go" aria-hidden="true"></i>
+      <div class="top"><img src="img/gpulse-icon.png" alt=""><div><h3>GPulse</h3><div class="cat">Health &amp; fitness</div></div></div>
+      <p>A Garmin Venu 4 companion with no Garmin sign-in. It talks to the watch over Bluetooth and shows only real data.</p>
     </a>
   </div>
 </section>
