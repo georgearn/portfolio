@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>if(/^https?:$/.test(location.protocol)&&/\.html$/.test(location.pathname))history.replaceState(null,"",location.pathname.replace(/(index)?\.html$/,"")+location.search+location.hash)</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c1d22">
+<title>Twelve Labours | Yurii Arnautov</title>
+<meta name="description" content="Twelve Labours: a top-down pixel adventure about Heracles, in development. How it is going so far: the idea, the process, the struggles and the discoveries.">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="img/icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+.g-hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(32px,6vw,80px);align-items:center;padding-block:clamp(24px,5vw,56px) clamp(48px,7vw,88px)}
+.g-hero h1{font-size:clamp(46px,7vw,84px);line-height:1;letter-spacing:-.04em;margin-bottom:22px}
+.g-hero .kicker{font:500 13px/1 var(--mono);color:var(--accent);margin-bottom:16px}
+.g-hero .lede{font-size:clamp(17px,1.6vw,19px);line-height:1.6;color:var(--text-2);max-width:46ch;margin-bottom:36px}
+.g-hero .labours{max-width:520px;margin-bottom:28px}
+.g-art{margin:0;position:relative}
+.g-art img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:var(--r-surface);border:1px solid var(--line)}
+
+.g-status{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-3)}
+.g-status i{font-size:18px;color:var(--text-2)}
+
+/* The twelve: names under the bar */
+.twelve{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.twelve li{background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--r-img);padding:16px 18px;display:grid;gap:6px;font-size:15px;line-height:1.35;color:var(--text-3)}
+.twelve li b{font-weight:500;color:var(--text-2)}
+.twelve li span{font-size:13px}
+.twelve li.done{border-color:var(--accent);background:var(--accent-soft)}
+.twelve li.done b{color:var(--text)}
+.twelve li.done span{color:var(--accent)}
+@media (max-width:1023px){.twelve{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:767px){.twelve{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Cards for discoveries */
+.finds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.find{background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--r-surface);padding:clamp(22px,3vw,32px)}
+.find h3{font-size:19px;line-height:1.3;margin-bottom:10px}
+.find p{color:var(--text-2);font-size:15px;line-height:1.65}
+@media (max-width:767px){.finds{grid-template-columns:1fr}}
+
+/* Screens strip: mixed shapes */
+.screens.game figure{width:auto}
+.screens.game img{height:clamp(200px,28vw,300px);width:auto;aspect-ratio:auto;max-width:none}
+.screens.game figcaption{max-width:34ch}
+
+@media (max-width:767px){.g-hero{grid-template-columns:1fr}.g-art{order:-1}}
+</style>
+</head>
+<body>
+
+<header class="wrap nav">
+  <a class="link" href="/"><i class="ph ph-arrow-left"></i>Home</a>
+</header>
+
+<main>
+<section class="wrap g-hero">
+  <div>
+    <div class="kicker enter" style="--i:0">Game in development</div>
+    <h1 class="enter" style="--i:1">Twelve Labours</h1>
+    <p class="lede enter" style="--i:2">A top-down pixel adventure about Heracles and the trials he takes on to atone. It is a passion project I build in my spare time, one labour at a time. One is ready, eleven to go.</p>
+    <div class="labours enter" style="--i:3" role="img" aria-label="1 of 12 labours ready">
+      <div class="count"><strong>1<span>/12</span></strong> labours ready</div>
+      <ol class="lab-bar" aria-hidden="true">
+        <li class="done"></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+      </ol>
+    </div>
+    <p class="g-status enter" style="--i:4"><i class="ph ph-device-mobile-slash"></i>Being prepared as a browser game on itch.io. Not on Android yet.</p>
+  </div>
+  <figure class="g-art enter" style="--i:2">
+    <img src="img/heracles-key-art.jpg" alt="Heracles in a lion-skin hood and cloak, club in hand, looks over a walled citadel at dusk" fetchpriority="high">
+  </figure>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">Why Heracles</h2>
+  <div class="prose reveal">
+    <p>There was never a canonical version of this character. The ancient sources disagree on the order of the labours and on much of the detail, and every era has retold him its own way. That leaves a lot of room, and I think there is real potential in it.</p>
+    <p>Heracles is the strongest man alive, and the myth is about what that costs him. The twelve labours are his penance, so I wanted a game where strength is the problem to deal with and not the answer to everything. Twelve trials, each its own place with its own question.</p>
+    <p>I combine tellings and invent the small scenes that connect them, and I treat every departure as a choice. The setting is the Bronze Age, around the 13th century BCE, with Greek names throughout: Heracles, not Hercules.</p>
+  </div>
+</section>
+
+<section class="wrap section" id="progress">
+  <h2 class="h2 reveal">The twelve</h2>
+  <p class="muted reveal" style="margin:-8px 0 24px;font-size:14px">In the order the myth tells them.</p>
+  <ol class="twelve reveal">
+    <li class="done"><b>The Nemean Lion</b><span>Ready</span></li>
+    <li><b>The Lernaean Hydra</b><span>Not yet</span></li>
+    <li><b>The Ceryneian Hind</b><span>Not yet</span></li>
+    <li><b>The Erymanthian Boar</b><span>Not yet</span></li>
+    <li><b>The Augean Stables</b><span>Not yet</span></li>
+    <li><b>The Stymphalian Birds</b><span>Not yet</span></li>
+    <li><b>The Cretan Bull</b><span>Not yet</span></li>
+    <li><b>The Mares of Diomedes</b><span>Not yet</span></li>
+    <li><b>The Girdle of Hippolyta</b><span>Not yet</span></li>
+    <li><b>The Cattle of Geryon</b><span>Not yet</span></li>
+    <li><b>The Apples of the Hesperides</b><span>Not yet</span></li>
+    <li><b>Cerberus</b><span>Not yet</span></li>
+  </ol>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">Pictures so far</h2>
+  <p class="muted reveal" style="margin:-8px 0 20px;font-size:14px">Work in progress. Nothing here is final.</p>
+  <div class="screens game reveal">
+    <figure><img loading="lazy" src="img/heracles-title.jpg" alt="Title screen: a stone citadel above an olive grove, a snow-capped mountain and a sailing ship behind"><figcaption>The title screen</figcaption></figure>
+    <figure><img loading="lazy" src="img/heracles-road.jpg" alt="Heracles standing on a dirt road between two rows of flat-roofed stone houses"><figcaption>In the game: the road out of town</figcaption></figure>
+    <figure><img loading="lazy" src="img/heracles-chiron.jpg" alt="A young Heracles with a club and shield talks with the centaur Chiron in a stone training yard"><figcaption>A story plate: the training yard</figcaption></figure>
+    <figure><img loading="lazy" src="img/heracles-map.jpg" alt="Parchment map of Greece with Mycenae, Nemea and Lerna marked"><figcaption>The map of Greece</figcaption></figure>
+    <figure><img loading="lazy" src="img/heracles-portrait.png" alt="Pixel portrait of Heracles: a bearded man with long auburn hair"><figcaption>Dialogue portrait</figcaption></figure>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">How it is made</h2>
+  <div class="rows">
+    <div class="r reveal"><h3>A design document first</h3><p>Before any scene existed there was a written design document, and a set of design rules I reread before adding anything the player sees, hears or touches. The game is built in Godot, and almost everything that can be data (timings, dialogue, layouts) lives in plain files instead of code, so I can change it without touching scripts.</p></div>
+    <div class="r reveal"><h3>Layout before art</h3><p>Every place starts as a rough sketch with a mask of where Heracles can walk. The art is made to fit the sketch, and then I measure the finished art and redraw the walkable areas from it, because the art never matches the sketch exactly.</p></div>
+    <div class="r reveal"><h3>Composed, not painted</h3><p>Ordinary outdoor screens are assembled in the engine from a library of ground textures and sprites, so the world feels like one place. Fully painted screens are kept for the special ones: arenas, courtyards, the home town and the story plates between scenes.</p></div>
+    <div class="r reveal"><h3>A checker, and my own eyes</h3><p>A validation script runs before I call any piece of work done: placement, collisions, missing portraits, file types. Then I look at it. A run with no errors proves the logic, not how a screen looks or feels.</p></div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">Making it a game</h2>
+  <div class="rows">
+    <div class="r reveal"><h3>A clear scope</h3><p>Twelve labours is a big promise, and a myth is not a design. Deciding what is in and what is out, before building anything, was the first real challenge.</p></div>
+    <div class="r reveal"><h3>Mechanics you can play</h3><p>A famous story does not tell the player what to do. Turning each episode into something playable, and not just a scene to watch, is the hardest design work.</p></div>
+    <div class="r reveal"><h3>More than 30 or 40 minutes</h3><p>I do not want this to be over in half an hour. That takes enough depth in each labour and in the world between them, without padding it out.</p></div>
+    <div class="r reveal"><h3>Each labour its own challenge</h3><p>It would be easy to make twelve versions of the same fight with a different monster. Keeping every labour a distinct challenge is tricky.</p></div>
+    <div class="r reveal"><h3>The pull of fighting</h3><p>I keep leaning toward fighting. Improving combat as far as I can would make sense, but it runs into the limits of platforms and art, so I keep checking how much weight it should carry.</p></div>
+    <div class="r reveal"><h3>Quests are hard to scale alone</h3><p>So I pilot as development goes: finish a labour, see how it plays, and let that shape the next one.</p></div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">What didn't work at first</h2>
+  <div class="features">
+    <div class="feature reveal">
+      <h3>Heracles kept changing size</h3>
+      <p>Walking north, running, wading, mid-swing: every animation came out a slightly different size, and fixing it by eye never held. I now measure his silhouette for each move and correct it frame by frame.</p>
+    </div>
+    <div class="feature reveal" style="--i:1">
+      <h3>Painting every screen</h3>
+      <p>My first plan was one generated painting per location. Edges clashed, the art drifted from the layout and the style changed from screen to screen. That is why most screens are composed now.</p>
+    </div>
+    <div class="feature reveal">
+      <h3>The wrong era</h3>
+      <p>The first town came out as a red-roofed suburb with terracotta tiles. The Bronze Age had flat plastered roofs. Someone who loves the myth notices that, so some words in a prompt are now off the table.</p>
+    </div>
+    <div class="feature reveal" style="--i:1">
+      <h3>One story for two audiences</h3>
+      <p>Someone who knows the myth should recognise it, and someone who has never heard of it should still understand why each scene happens. An early scene dropped a teenager in front of a centaur with no explanation. Now every scene says who, where and why in its first moment, and small markers guide the player instead of instructions on screen.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">What I found out</h2>
+  <div class="finds">
+    <div class="find reveal"><h3>Measure, do not eyeball</h3><p>Scale, placement and walkable ground all got better the moment I measured them instead of judging by feel.</p></div>
+    <div class="find reveal" style="--i:1"><h3>Layout first makes art disposable</h3><p>When the sketch comes first, throwing away a bad picture costs one render, not a redesign.</p></div>
+    <div class="find reveal"><h3>Say less on screen</h3><p>A small marker for where to go and a short checklist did more than any paragraph of instructions.</p></div>
+    <div class="find reveal" style="--i:1"><h3>Write the lesson down</h3><p>I keep a file of what went wrong and the rule that prevents it. Every row is something that once cost me a redo.</p></div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <div class="note reveal">
+    <i class="ph ph-info"></i>
+    <div>
+      <h2>A note on AI</h2>
+      <p>The art in this game is made with AI generation tools, then processed, laid out and animated by hand in the engine. That was a conscious choice: it lets me build at my own pace and keep control of the output. There was also no guarantee that hand-made art would turn out better, and I am happy with what I get, so I see no reason to change the approach. The concept, the aesthetic and the creative decisions are still mine.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="h2 reveal">What is next</h2>
+  <div class="prose reveal">
+    <p>This is a passion project I work on next to everything else, so I have no timeline for the next steps. The progress bar above is the honest status, and it will move one segment at a time.</p>
+    <p>For now the game is being prepared to be playable in the browser on itch.io. Whether that happens depends on the final result. It is not on Android yet.</p>
+    <p>Also in the plans: an arena with waves of enemies, and a local leaderboard.</p>
+  </div>
+</section>
+</main>
+
+<nav class="wrap pager" aria-label="Navigation">
+  <a class="next" href="/"><span>Back to</span>Home</a>
+</nav>
+
+<script src="gallery.js"></script>
+</body>
+</html>

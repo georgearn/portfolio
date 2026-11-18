@@ -125,3 +125,16 @@ code{font:.86em/1 var(--mono);color:var(--text);background:var(--bg-raised);bord
   .js .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:calc(var(--i,0) * 70ms)}
   .js .reveal.in{opacity:1;transform:none}
 }
+
+/* Labours progress: twelve segments, filled ones are ready. Used on the home page and the game page. */
+.labours{display:grid;gap:14px}
+.labours .count{display:flex;align-items:baseline;gap:12px;font-size:15px;color:var(--text-2)}
+.labours .count strong{font-size:clamp(36px,5vw,52px);line-height:1;font-weight:600;letter-spacing:-.035em;color:var(--text)}
+.labours .count strong span{color:var(--text-3)}
+.lab-bar{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;list-style:none;margin:0;padding:0}
+.lab-bar li{height:12px;border-radius:3px;background:var(--bg-raised);border:1px solid var(--line)}
+.lab-bar li.done{background:var(--accent);border-color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){
+  .lab-bar li.done{transform-origin:left center;animation:lab-fill 1.1s var(--ease) .6s both}
+  @keyframes lab-fill{from{transform:scaleX(0);opacity:.4}to{transform:none;opacity:1}}
+}

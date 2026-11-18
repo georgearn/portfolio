@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#1c1d22">
 <title>Yurii Arnautov</title>
-<meta name="description" content="Android apps by Yurii Arnautov, built in Python and Kotlin.">
+<meta name="description" content="Android apps by Yurii Arnautov, built in Python and Kotlin, and a pixel adventure game about Heracles in development.">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
@@ -25,9 +25,16 @@
 /* Three phones, fanned. Offsets carry the asymmetry. */
 .fan{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start;max-width:520px;justify-self:end;width:100%}
 .fan::before{content:"";position:absolute;inset:10% 0 0;background:radial-gradient(closest-side,var(--accent-soft),transparent);z-index:-1}
+.fan-item{position:relative;display:block;transition:transform .35s var(--ease)}
+.fan-item:hover,.fan-item:focus-visible{transform:scale(1.06);z-index:1}
+.fan-item:active{transform:scale(1.02)}
+.fan-item:nth-child(1){margin-top:56px}
+.fan-item:nth-child(3){margin-top:28px}
 .fan img{width:100%;aspect-ratio:9/19;object-fit:cover;object-position:top;border-radius:18px;border:1px solid var(--line)}
-.fan img:nth-child(1){margin-top:56px}
-.fan img:nth-child(3){margin-top:28px}
+.fan-label{position:absolute;left:10px;right:10px;bottom:10px;padding:8px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line-strong);font-size:13px;font-weight:500;line-height:1.2;text-align:center;opacity:0;transform:translateY(6px);transition:opacity .25s var(--ease),transform .25s var(--ease);pointer-events:none}
+.fan-item:hover .fan-label,.fan-item:focus-visible .fan-label{opacity:1;transform:none}
+.cell{scroll-margin-top:96px}
+.cell.hl{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--bg-raised))}
 
 /* Apps bento: 4 apps, 4 cells */
 .bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
@@ -75,6 +82,23 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
   .cell .go{top:22px;right:22px}
   .cell .shots,.c-subs .shots,.c-show .shots,.c-fr .shots,.c-gp .shots{--n:2;margin-bottom:-90px}
 }
+/* Game in progress: its own composition, not a bento cell */
+.game{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--r-surface);overflow:hidden;transition:border-color .3s var(--ease),transform .3s var(--ease)}
+.game:hover{border-color:var(--line-strong);transform:translateY(-3px)}
+.game:active{transform:scale(.995)}
+.game .art{position:relative;min-height:340px}
+.game .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 30%;transition:transform .8s var(--ease)}
+.game:hover .art img{transform:scale(1.04)}
+.game .body{padding:clamp(24px,4vw,48px);display:flex;flex-direction:column;justify-content:center;gap:20px}
+.game .cat{font-size:13px;color:var(--text-3)}
+.game h3{font-size:clamp(28px,3.6vw,40px);line-height:1.05;letter-spacing:-.03em;margin-top:10px}
+.game p.what{color:var(--text-2);font-size:15px;line-height:1.6;max-width:46ch}
+.game .labours{max-width:440px}
+.game .lab-bar li:not(.done){background:var(--bg)}
+.game .more{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:500;color:var(--text)}
+.game .more i{transition:transform .3s var(--ease)}
+.game:hover .more i{transform:translateX(3px)}
+@media (max-width:767px){.game{grid-template-columns:1fr}.game .art{min-height:0;aspect-ratio:16/10}}
 .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-block:32px 40px;border-top:1px solid var(--line);font-size:14px;color:var(--text-3)}
 </style>
 </head>
@@ -88,23 +112,42 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
 <section class="wrap home-hero">
   <div>
     <h1 class="enter" style="--i:0">Yurii Arnautov</h1>
-    <p class="lede enter" style="--i:1">My journey into Android development, from Python to Kotlin. So far, apps I wanted on my own phone. Next, a game.</p>
+    <p class="lede enter" style="--i:1">My journey into Android development, from Python to Kotlin. Apps I wanted on my own phone, and now a game in the making.</p>
     <div class="ctas enter" style="--i:2">
       <a class="btn btn-primary" href="#apps">See the apps <i class="ph ph-arrow-down"></i></a>
       <a class="btn btn-ghost" href="https://github.com/georgearn" target="_blank" rel="noopener"><i class="ph ph-github-logo"></i>GitHub</a>
     </div>
   </div>
-  <div class="fan" aria-hidden="true">
-    <img class="enter" style="--i:2" src="img/kotlin-subs-overview-blurred.png" alt="" fetchpriority="high">
-    <img class="enter" style="--i:3" src="img/showtracker-home.png" alt="" fetchpriority="high">
-    <img class="enter" style="--i:4" src="img/fitapp-body-map.png" alt="" fetchpriority="high">
+  <div class="fan">
+    <a class="fan-item" href="#app-subs" data-cell="app-subs"><img class="enter" style="--i:2" src="img/kotlin-subs-overview-blurred.png" alt="" fetchpriority="high"><span class="fan-label">Subscription Tracker</span></a>
+    <a class="fan-item" href="#app-show" data-cell="app-show"><img class="enter" style="--i:3" src="img/showtracker-home.png" alt="" fetchpriority="high"><span class="fan-label">Show Tracker</span></a>
+    <a class="fan-item" href="#app-fit" data-cell="app-fit"><img class="enter" style="--i:4" src="img/fitapp-body-map.png" alt="" fetchpriority="high"><span class="fan-label">FitApp</span></a>
   </div>
 </section>
 
-<section class="wrap section" id="apps" style="padding-top:clamp(40px,6vw,72px)">
+<section class="wrap section" id="game" style="padding-top:clamp(40px,6vw,72px)">
+  <h2 class="h2 reveal">In progress</h2>
+  <a class="game reveal" href="/heracles">
+    <div class="art"><img loading="lazy" src="img/heracles-key-art.jpg" alt="Heracles in a lion-skin hood looks over a walled citadel at dusk"></div>
+    <div class="body">
+      <div>
+        <div class="cat">Game, in development</div>
+        <h3>Twelve Labours</h3>
+      </div>
+      <p class="what">A top-down pixel adventure about Heracles, a passion project built one labour at a time in my spare time. Not an app and not on Android yet, so this is the story of how it is going.</p>
+      <div class="labours" role="img" aria-label="1 of 12 labours ready">
+        <div class="count"><strong>1<span>/12</span></strong> labours ready</div>
+        <ol class="lab-bar" aria-hidden="true"><li class="done"></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      </div>
+      <span class="more">Follow the build <i class="ph ph-arrow-right"></i></span>
+    </div>
+  </a>
+</section>
+
+<section class="wrap section" id="apps">
   <h2 class="h2 reveal">Apps</h2>
   <div class="bento">
-    <a class="cell c-subs reveal" href="/subscription-tracker">
+    <a id="app-subs" class="cell c-subs reveal" href="/subscription-tracker">
       <i class="ph ph-arrow-up-right go" aria-hidden="true"></i>
       <div class="top"><img src="img/subscription-tracker-icon.png" alt=""><div><h3>Subscription Tracker</h3><div class="cat">Finance</div></div></div>
       <p>Every recurring charge in one place. Built twice: first in Python, then rebuilt in native Kotlin.</p>
@@ -115,7 +158,7 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
         <img loading="lazy" src="img/kotlin-subs-settings.png" alt="Kotlin version, settings">
       </div>
     </a>
-    <a class="cell c-fit reveal" style="--i:1" href="/fitapp">
+    <a id="app-fit" class="cell c-fit reveal" style="--i:1" href="/fitapp">
       <i class="ph ph-arrow-up-right go" aria-hidden="true"></i>
       <div class="top"><img src="img/fitapp-icon.png" alt=""><div><h3>FitApp</h3><div class="cat">Health &amp; fitness</div></div></div>
       <p>Exercise variety, not tracking. Browse, generate, or build a routine by hand.</p>
@@ -124,7 +167,7 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
         <img loading="lazy" class="alt" src="img/fitapp-chest-exercises.png" alt="Chest exercises list">
       </div>
     </a>
-    <a class="cell c-show reveal" href="/showtracker">
+    <a id="app-show" class="cell c-show reveal" href="/showtracker">
       <i class="ph ph-arrow-up-right go" aria-hidden="true"></i>
       <div class="top"><img src="img/showtracker-icon.png" alt=""><div><h3>Show Tracker</h3><div class="cat">Entertainment</div></div></div>
       <p>Movies and series tracked together, with release alerts and a picker for when you can't decide.</p>
@@ -157,6 +200,8 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
     </a>
   </div>
 </section>
+
+
 </main>
 
 <footer class="wrap foot">
@@ -165,5 +210,20 @@ a.cell:hover .go{color:var(--accent);transform:translate(3px,-3px)}
 </footer>
 
 <script src="gallery.js"></script>
+<script>
+// Hero screens: clicking one scrolls to its app card in the grid below and highlights it.
+document.querySelectorAll(".fan-item").forEach(function(a){
+  var cell=document.getElementById(a.dataset.cell),t;
+  if(!cell)return;
+  a.addEventListener("click",function(ev){
+    ev.preventDefault();
+    var calm=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    cell.scrollIntoView({behavior:calm?"auto":"smooth",block:"center"});
+    document.querySelectorAll(".cell.hl").forEach(function(c){c.classList.remove("hl")});
+    cell.classList.add("hl");
+    clearTimeout(t);t=setTimeout(function(){cell.classList.remove("hl")},2400);
+  });
+});
+</script>
 </body>
 </html>
